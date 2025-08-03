@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
-import { Rubik } from 'next/font/google';
+import { Sora } from 'next/font/google';
 import './globals.css';
 
-const rubik = Rubik({
-	variable: '--font-rubik',
+const sora = Sora({
+	variable: '--font-sora',
 	subsets: ['latin'],
+	weight: ['400', '500', '600', '700'],
 });
 
 export const metadata: Metadata = {
@@ -20,7 +21,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${rubik.variable} antialiased`}>{children}</body>
+			<body className={`${sora.variable} antialiased bg-zinc-50 font-sans`}>
+				{children}
+			</body>
 		</html>
 	);
 }
