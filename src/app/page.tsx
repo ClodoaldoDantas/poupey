@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button';
+
 export default function Home() {
 	return (
 		<div className="font-sans">
@@ -6,6 +8,8 @@ export default function Home() {
 				Organize seus gastos, acompanhe seu saldo e economize sem complicação —
 				tudo com um toque leve e descontraído. Poupe melhor, viva melhor!
 			</p>
+
+			<Button>Adicionar Transação</Button>
 		</div>
 	);
 }
