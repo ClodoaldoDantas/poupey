@@ -25,7 +25,7 @@ export function SummaryCard({ type, value }: SummaryCardProps) {
 				{icons[type]}
 			</div>
 
-			<strong className="text-xl md:text-3xl text-zinc-800 font-semibold">
+			<strong className="text-2xl lg:text-3xl text-zinc-800 font-semibold">
 				{value}
 			</strong>
 		</div>
