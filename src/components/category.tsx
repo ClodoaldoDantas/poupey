@@ -5,7 +5,7 @@ import {
 	HelpCircleIcon,
 	HomeIcon,
 	PopcornIcon,
-} from 'lucide-react';
+} from 'lucide-react'
 
 export const categories = {
 	food: {
@@ -32,19 +32,19 @@ export const categories = {
 		name: 'Outros',
 		icon: HelpCircleIcon,
 	},
-};
+}
 
 type CategoryProps = {
-	categoryId: keyof typeof categories;
-};
+	categoryId: keyof typeof categories
+}
 
 export function Category({ categoryId }: CategoryProps) {
-	const { name, icon: Icon } = categories[categoryId];
+	const { name, icon: Icon } = categories[categoryId]
 
 	return (
 		<div className="flex items-center gap-2.5">
 			<Icon className="size-5" />
 			<span>{name}</span>
 		</div>
-	);
+	)
 }

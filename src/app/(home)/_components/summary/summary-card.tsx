@@ -1,21 +1,21 @@
-import { CoinsIcon, TrendingDownIcon, TrendingUpIcon } from 'lucide-react';
+import { CoinsIcon, TrendingDownIcon, TrendingUpIcon } from 'lucide-react'
 
 type SummaryCardProps = {
-	type: 'income' | 'expense' | 'balance';
-	value: string;
-};
+	type: 'income' | 'expense' | 'balance'
+	value: string
+}
 
 const labels = {
 	income: 'Entradas',
 	expense: 'Saídas',
 	balance: 'Saldo',
-};
+}
 
 const icons = {
 	income: <TrendingUpIcon className="size-6 text-green-500" />,
 	expense: <TrendingDownIcon className="size-6 text-red-500" />,
 	balance: <CoinsIcon className="size-6 text-zinc-500" />,
-};
+}
 
 export function SummaryCard({ type, value }: SummaryCardProps) {
 	return (
@@ -29,5 +29,5 @@ export function SummaryCard({ type, value }: SummaryCardProps) {
 				{value}
 			</strong>
 		</div>
-	);
+	)
 }

@@ -1,4 +1,4 @@
-import { DollarSignIcon } from 'lucide-react';
+import { DollarSignIcon } from 'lucide-react'
 
 export function Logo() {
 	return (
@@ -6,5 +6,5 @@ export function Logo() {
 			<DollarSignIcon className="size-8" />
 			Poupey
 		</h1>
-	);
+	)
 }

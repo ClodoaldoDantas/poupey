@@ -1,4 +1,4 @@
-import { Category } from '@/components/category';
+import { Category } from '@/components/category'
 import {
 	Table,
 	TableBody,
@@ -6,7 +6,7 @@ import {
 	TableHead,
 	TableHeader,
 	TableRow,
-} from '@/components/ui/table';
+} from '@/components/ui/table'
 
 export function Transactions() {
 	return (
@@ -96,5 +96,5 @@ export function Transactions() {
 				</TableBody>
 			</Table>
 		</section>
-	);
+	)
 }

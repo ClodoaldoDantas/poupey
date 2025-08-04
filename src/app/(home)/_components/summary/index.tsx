@@ -1,4 +1,4 @@
-import { SummaryCard } from './summary-card';
+import { SummaryCard } from './summary-card'
 
 export function Summary() {
 	return (
@@ -9,5 +9,5 @@ export function Summary() {
 				<SummaryCard type="balance" value="R$ 16.141,00" />
 			</div>
 		</div>
-	);
+	)
 }
