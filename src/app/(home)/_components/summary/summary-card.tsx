@@ -5,19 +5,19 @@ type SummaryCardProps = {
 	value: string;
 };
 
+const labels = {
+	income: 'Entradas',
+	expense: 'Saídas',
+	balance: 'Saldo',
+};
+
+const icons = {
+	income: <TrendingUpIcon className="size-6 text-green-500" />,
+	expense: <TrendingDownIcon className="size-6 text-red-500" />,
+	balance: <CoinsIcon className="size-6 text-zinc-500" />,
+};
+
 export function SummaryCard({ type, value }: SummaryCardProps) {
-	const labels = {
-		income: 'Entradas',
-		expense: 'Saídas',
-		balance: 'Total',
-	};
-
-	const icons = {
-		income: <TrendingUpIcon className="size-6 text-green-500" />,
-		expense: <TrendingDownIcon className="size-6 text-red-500" />,
-		balance: <CoinsIcon className="size-6 text-zinc-500" />,
-	};
-
 	return (
 		<div className="w-full bg-white shadow-md p-6 rounded flex flex-col gap-4">
 			<div className="flex items-center justify-between">
@@ -25,7 +25,7 @@ export function SummaryCard({ type, value }: SummaryCardProps) {
 				{icons[type]}
 			</div>
 
-			<strong className="text-xl md:text-3xl text-zinc-800 font-bold">
+			<strong className="text-xl md:text-3xl text-zinc-800 font-semibold">
 				{value}
 			</strong>
 		</div>
