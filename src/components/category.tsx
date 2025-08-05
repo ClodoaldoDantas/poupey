@@ -4,6 +4,8 @@ import {
 	HeartPlusIcon,
 	HelpCircleIcon,
 	HomeIcon,
+	Laptop2Icon,
+	PiggyBankIcon,
 	PopcornIcon,
 } from 'lucide-react'
 
@@ -24,21 +26,27 @@ export const categories = {
 		name: 'Casa',
 		icon: HomeIcon,
 	},
-	hobby: {
+	leisure: {
 		name: 'Lazer',
 		icon: PopcornIcon,
 	},
-	other: {
+	investments: {
+		name: 'Investimentos',
+		icon: PiggyBankIcon,
+	},
+	work: {
+		name: 'Trabalho',
+		icon: Laptop2Icon,
+	},
+	others: {
 		name: 'Outros',
 		icon: HelpCircleIcon,
 	},
 }
 
-type CategoryProps = {
-	categoryId: keyof typeof categories
-}
+export type CategoryId = keyof typeof categories
 
-export function Category({ categoryId }: CategoryProps) {
+export function Category({ categoryId }: { categoryId: CategoryId }) {
 	const { name, icon: Icon } = categories[categoryId]
 
 	return (

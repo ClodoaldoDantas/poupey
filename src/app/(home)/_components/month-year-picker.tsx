@@ -8,6 +8,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from '@/components/ui/popover'
+
 import {
 	Select,
 	SelectContent,
@@ -58,7 +59,7 @@ export function MonthYearPicker() {
 					<ChevronDownIcon className="size-5" />
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent className="flex flex-col gap-2">
+			<PopoverContent className="flex gap-2">
 				<Select
 					name="month"
 					value={selectedMonth.toString()}
