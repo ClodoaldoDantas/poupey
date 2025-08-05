@@ -9,11 +9,7 @@ import {
 	TableRow,
 } from '@/components/ui/table'
 import type { Transaction } from '@/types/transaction'
-
-const priceFormatter = new Intl.NumberFormat('pt-BR', {
-	style: 'currency',
-	currency: 'BRL',
-})
+import { formatPrice } from '@/utils/format-price'
 
 export function Transactions({
 	transactions,
@@ -33,9 +29,7 @@ export function Transactions({
 				</TableHeader>
 				<TableBody className="text-zinc-700">
 					{transactions.map((transaction) => {
-						const amount = priceFormatter.format(
-							transaction.amountInCents / 100,
-						)
+						const amount = formatPrice(transaction.amountInCents / 100)
 
 						return (
 							<TableRow key={transaction.id}>

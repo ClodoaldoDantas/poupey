@@ -17,7 +17,7 @@ export default async function Home({ searchParams }: HomeProps) {
 		<>
 			<Header />
 
-			<Summary />
+			<Summary transactions={transactions} />
 			<Transactions transactions={transactions} />
 		</>
 	)
