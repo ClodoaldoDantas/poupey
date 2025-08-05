@@ -1,7 +1,7 @@
 'use server'
 
 import dayjs from 'dayjs'
-import { and, gte, lt } from 'drizzle-orm'
+import { and, desc, gte, lt } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { db } from '@/db'
 import { transactionsTable } from '@/db/schema'
@@ -30,6 +30,7 @@ export async function getTransactions({ month, year }: GetTransactionsParams) {
 				lt(transactionsTable.paymentDate, endDate),
 			),
 		)
+		.orderBy(desc(transactionsTable.paymentDate))
 
 	return transactions as Transaction[]
 }
