@@ -10,16 +10,16 @@ import {
 } from '@/components/ui/table'
 import type { Transaction } from '@/types/transaction'
 
+const priceFormatter = new Intl.NumberFormat('pt-BR', {
+	style: 'currency',
+	currency: 'BRL',
+})
+
 export function Transactions({
 	transactions,
 }: {
 	transactions: Transaction[]
 }) {
-	const priceFormatter = new Intl.NumberFormat('pt-BR', {
-		style: 'currency',
-		currency: 'BRL',
-	})
-
 	return (
 		<section className="container my-12 mx-auto px-4">
 			<Table className="text-base">
@@ -32,26 +32,28 @@ export function Transactions({
 					</TableRow>
 				</TableHeader>
 				<TableBody className="text-zinc-700">
-					{transactions.map((transaction) => (
-						<TableRow key={transaction.id}>
-							<TableCell>{transaction.description}</TableCell>
-							{transaction.type === 'expense' ? (
+					{transactions.map((transaction) => {
+						const amount = priceFormatter.format(
+							transaction.amountInCents / 100,
+						)
+
+						return (
+							<TableRow key={transaction.id}>
+								<TableCell>{transaction.description}</TableCell>
+								{transaction.type === 'expense' ? (
+									<TableCell>- {amount}</TableCell>
+								) : (
+									<TableCell className="text-green-600">{amount}</TableCell>
+								)}
 								<TableCell>
-									- {priceFormatter.format(transaction.amount)}
+									<Category categoryId={transaction.category} />
 								</TableCell>
-							) : (
-								<TableCell className="text-green-600">
-									{priceFormatter.format(transaction.amount)}
+								<TableCell>
+									{dayjs(transaction.paymentDate).format('DD/MM/YYYY')}
 								</TableCell>
-							)}
-							<TableCell>
-								<Category categoryId={transaction.category} />
-							</TableCell>
-							<TableCell>
-								{dayjs(transaction.paymentDate).format('DD/MM/YYYY')}
-							</TableCell>
-						</TableRow>
-					))}
+							</TableRow>
+						)
+					})}
 				</TableBody>
 			</Table>
 		</section>

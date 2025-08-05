@@ -1,7 +1,7 @@
 'use client'
 
 import { ChevronDownIcon } from 'lucide-react'
-import { parseAsInteger, useQueryState } from 'nuqs'
+import { useQueryState } from 'nuqs'
 import { Button } from '@/components/ui/button'
 import {
 	Popover,
@@ -16,6 +16,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
+import { getLastFiveYears } from '@/utils/get-last-five-years'
+import { monthYearSearchParams } from '@/utils/load-search-params'
 
 const months = [
 	'Janeiro',
@@ -32,22 +34,18 @@ const months = [
 	'Dezembro',
 ]
 
+const lastFiveYears = getLastFiveYears()
+
 export function MonthYearPicker() {
-	const currentDate = new Date()
-	const currentYear = currentDate.getFullYear()
-	const currentMonth = currentDate.getMonth()
+	const [selectedMonth, setSelectedMonth] = useQueryState('month', {
+		...monthYearSearchParams.month,
+		shallow: false,
+	})
 
-	const lastFiveYears = Array.from({ length: 5 }, (_, i) => currentYear - i)
-
-	const [selectedMonth, setSelectedMonth] = useQueryState(
-		'month',
-		parseAsInteger.withDefault(currentMonth),
-	)
-
-	const [selectedYear, setSelectedYear] = useQueryState(
-		'year',
-		parseAsInteger.withDefault(currentYear),
-	)
+	const [selectedYear, setSelectedYear] = useQueryState('year', {
+		...monthYearSearchParams.year,
+		shallow: false,
+	})
 
 	const selectedDateFormatted = `${months[selectedMonth]}, ${selectedYear}`
 
