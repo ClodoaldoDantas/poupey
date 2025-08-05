@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
-import { Wallet2Icon } from 'lucide-react'
+import { TrendingDownIcon, TrendingUpIcon, Wallet2Icon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { categories } from '@/components/category'
@@ -35,6 +35,7 @@ import {
 const formSchema = z.object({
 	description: z.string().min(2, { message: 'Descrição é obrigatória.' }),
 	amount: z.string().min(1, { message: 'Valor é obrigatório.' }),
+	type: z.enum(['income', 'expense']),
 	category: z.string().min(1, { message: 'Categoria é obrigatória.' }),
 	paymentDate: z.string().min(1, { message: 'Data é obrigatória.' }),
 })
@@ -48,6 +49,7 @@ export function AddTransactionDialog() {
 			description: '',
 			amount: '',
 			category: '',
+			type: 'expense',
 			paymentDate: dayjs().format('YYYY-MM-DD'),
 		},
 	})
@@ -55,8 +57,9 @@ export function AddTransactionDialog() {
 	function onSubmit(values: FormData) {
 		const data = {
 			description: values.description,
-			amountInCents: Number(values.amount) * 100,
 			category: values.category,
+			type: values.type,
+			amountInCents: Number(values.amount) * 100,
 			paymentDate: dayjs(values.paymentDate).toISOString(),
 		}
 
@@ -115,6 +118,38 @@ export function AddTransactionDialog() {
 
 						<FormField
 							control={form.control}
+							name="type"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel>Tipo de Transação</FormLabel>
+									<Select
+										onValueChange={field.onChange}
+										defaultValue={field.value}
+									>
+										<FormControl className="w-full">
+											<SelectTrigger>
+												<SelectValue placeholder="Selecione um tipo" />
+											</SelectTrigger>
+										</FormControl>
+										<SelectContent>
+											<SelectItem value="income">
+												<TrendingUpIcon className="size-5 text-green-500" />
+												Receita
+											</SelectItem>
+
+											<SelectItem value="expense">
+												<TrendingDownIcon className="size-5 text-red-500" />
+												Despesa
+											</SelectItem>
+										</SelectContent>
+									</Select>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+
+						<FormField
+							control={form.control}
 							name="category"
 							render={({ field }) => (
 								<FormItem>
@@ -130,9 +165,12 @@ export function AddTransactionDialog() {
 										</FormControl>
 										<SelectContent>
 											{Object.entries(categories).map(
-												([categoryId, category]) => (
+												([categoryId, { icon: Icon, name }]) => (
 													<SelectItem key={categoryId} value={categoryId}>
-														{category.name}
+														{Icon && (
+															<Icon className="size-5 text-foreground" />
+														)}
+														{name}
 													</SelectItem>
 												),
 											)}

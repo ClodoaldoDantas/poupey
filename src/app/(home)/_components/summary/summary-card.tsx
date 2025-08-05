@@ -6,8 +6,8 @@ type SummaryCardProps = {
 }
 
 const labels = {
-	income: 'Entradas',
-	expense: 'Saídas',
+	income: 'Receitas',
+	expense: 'Despesas',
 	balance: 'Saldo',
 }
 
