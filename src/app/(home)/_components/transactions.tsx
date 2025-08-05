@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { Category } from '@/components/category'
 import {
 	Table,
@@ -8,13 +9,17 @@ import {
 	TableRow,
 } from '@/components/ui/table'
 import type { Transaction } from '@/types/transaction'
-import { dateFormatter, priceFormatter } from '@/utils/formatter'
 
 export function Transactions({
 	transactions,
 }: {
 	transactions: Transaction[]
 }) {
+	const priceFormatter = new Intl.NumberFormat('pt-BR', {
+		style: 'currency',
+		currency: 'BRL',
+	})
+
 	return (
 		<section className="container my-12 mx-auto px-4">
 			<Table className="text-base">
@@ -43,7 +48,7 @@ export function Transactions({
 								<Category categoryId={transaction.category} />
 							</TableCell>
 							<TableCell>
-								{dateFormatter.format(new Date(transaction.paymentDate))}
+								{dayjs(transaction.paymentDate).format('DD/MM/YYYY')}
 							</TableCell>
 						</TableRow>
 					))}
