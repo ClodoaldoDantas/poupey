@@ -1,6 +1,6 @@
 import type { SearchParams } from 'nuqs/server'
 import { loadSearchParams } from '@/utils/load-search-params'
-import { getTransactions } from './_actions/get-transactions'
+import { getTransactions } from './_actions/transactions'
 import { Header } from './_components/header'
 import { Summary } from './_components/summary'
 import { Transactions } from './_components/transactions'

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Sora } from 'next/font/google'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
+import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 
 const sora = Sora({
@@ -24,6 +25,7 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={`${sora.variable} antialiased bg-zinc-50 font-sans`}>
 				<NuqsAdapter>{children}</NuqsAdapter>
+				<Toaster richColors position="bottom-center" />
 			</body>
 		</html>
 	)

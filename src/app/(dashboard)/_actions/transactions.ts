@@ -1,5 +1,8 @@
+'use server'
+
 import dayjs from 'dayjs'
 import { and, gte, lt } from 'drizzle-orm'
+import { revalidatePath } from 'next/cache'
 import { db } from '@/db'
 import { transactionsTable } from '@/db/schema'
 import type { Transaction } from '@/types/transaction'
@@ -18,9 +21,6 @@ export async function getTransactions({ month, year }: GetTransactionsParams) {
 
 	const endDate = dayjs().year(year).month(month).endOf('month').toISOString()
 
-	console.log('startDate', startDate)
-	console.log('endDate', endDate)
-
 	const transactions = await db
 		.select()
 		.from(transactionsTable)
@@ -32,4 +32,30 @@ export async function getTransactions({ month, year }: GetTransactionsParams) {
 		)
 
 	return transactions as Transaction[]
+}
+
+type CreateTransactionParams = {
+	description: string
+	category: string
+	type: 'income' | 'expense'
+	amountInCents: number
+	paymentDate: string
+}
+
+export async function createTransaction(payload: CreateTransactionParams) {
+	try {
+		await db.insert(transactionsTable).values(payload)
+	} catch {
+		return {
+			success: false,
+			message: 'Erro ao criar transação.',
+		}
+	}
+
+	revalidatePath('/')
+
+	return {
+		success: true,
+		message: 'Transação criada com sucesso.',
+	}
 }

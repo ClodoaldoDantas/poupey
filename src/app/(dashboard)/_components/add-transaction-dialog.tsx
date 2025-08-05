@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
 import { TrendingDownIcon, TrendingUpIcon, Wallet2Icon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 import { categories } from '@/components/category'
 import { Button } from '@/components/ui/button'
@@ -31,6 +32,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
+import { createTransaction } from '../_actions/transactions'
 
 const formSchema = z.object({
 	description: z.string().min(2, { message: 'Descrição é obrigatória.' }),
@@ -54,7 +56,7 @@ export function AddTransactionDialog() {
 		},
 	})
 
-	function onSubmit(values: FormData) {
+	async function handleCreateTransaction(values: FormData) {
 		const data = {
 			description: values.description,
 			category: values.category,
@@ -63,7 +65,13 @@ export function AddTransactionDialog() {
 			paymentDate: dayjs(values.paymentDate).toISOString(),
 		}
 
-		console.log('Submitting transaction:', data)
+		const result = await createTransaction(data)
+
+		if (result.success) {
+			toast.success(result.message)
+		} else {
+			toast.error(result.message)
+		}
 	}
 
 	return (
@@ -87,7 +95,10 @@ export function AddTransactionDialog() {
 				</DialogHeader>
 
 				<Form {...form}>
-					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+					<form
+						onSubmit={form.handleSubmit(handleCreateTransaction)}
+						className="space-y-6"
+					>
 						<FormField
 							control={form.control}
 							name="description"
