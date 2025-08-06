@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
-import { TrendingDownIcon, TrendingUpIcon, Wallet2Icon } from 'lucide-react'
+import { PlusCircleIcon, TrendingDownIcon, TrendingUpIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -85,8 +85,8 @@ export function AddTransactionDialog() {
 					size="lg"
 					className="text-base cursor-pointer"
 				>
-					<Wallet2Icon className="size-5" />
-					Adicionar Transação
+					<PlusCircleIcon className="size-5" />
+					Adicionar
 				</Button>
 			</DialogTrigger>
 			<DialogContent>
