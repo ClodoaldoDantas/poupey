@@ -14,6 +14,10 @@ export const metadata: Metadata = {
 	title: 'Poupey',
 	description:
 		'Poupey é o app divertido e fácil para controlar suas finanças pessoais.',
+	robots: {
+		index: false,
+		follow: false,
+	},
 }
 
 export default function RootLayout({
