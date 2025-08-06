@@ -44,16 +44,18 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>
 
+const initialState: FormData = {
+	description: '',
+	amount: '',
+	category: '',
+	type: 'expense',
+	paymentDate: dayjs().format('YYYY-MM-DD'),
+}
+
 export function AddTransactionDialog() {
 	const form = useForm<FormData>({
 		resolver: zodResolver(formSchema),
-		defaultValues: {
-			description: '',
-			amount: '',
-			category: '',
-			type: 'expense',
-			paymentDate: dayjs().format('YYYY-MM-DD'),
-		},
+		defaultValues: initialState,
 	})
 
 	async function handleCreateTransaction(values: FormData) {
@@ -69,6 +71,7 @@ export function AddTransactionDialog() {
 
 		if (result.success) {
 			toast.success(result.message)
+			form.reset(initialState)
 		} else {
 			toast.error(result.message)
 		}
@@ -133,10 +136,7 @@ export function AddTransactionDialog() {
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Tipo de Transação</FormLabel>
-									<Select
-										onValueChange={field.onChange}
-										defaultValue={field.value}
-									>
+									<Select onValueChange={field.onChange} value={field.value}>
 										<FormControl className="w-full">
 											<SelectTrigger>
 												<SelectValue placeholder="Selecione um tipo" />
@@ -165,10 +165,7 @@ export function AddTransactionDialog() {
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Categoria</FormLabel>
-									<Select
-										onValueChange={field.onChange}
-										defaultValue={field.value}
-									>
+									<Select onValueChange={field.onChange} value={field.value}>
 										<FormControl className="w-full">
 											<SelectTrigger>
 												<SelectValue placeholder="Selecione uma categoria" />
