@@ -3,7 +3,7 @@ import { loadSearchParams } from '@/utils/load-search-params'
 import { getTransactions } from './_actions/transactions'
 import { Header } from './_components/header'
 import { Summary } from './_components/summary'
-import { Transactions } from './_components/transactions'
+import { TransactionsTable } from './_components/transactions-table'
 
 type HomeProps = {
 	searchParams: Promise<SearchParams>
@@ -18,7 +18,7 @@ export default async function Home({ searchParams }: HomeProps) {
 			<Header />
 
 			<Summary transactions={transactions} />
-			<Transactions transactions={transactions} />
+			<TransactionsTable transactions={transactions} />
 		</>
 	)
 }

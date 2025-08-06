@@ -1,7 +1,7 @@
 'use server'
 
 import dayjs from 'dayjs'
-import { and, desc, gte, lt } from 'drizzle-orm'
+import { and, desc, eq, gte, lt } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { db } from '@/db'
 import { transactionsTable } from '@/db/schema'
@@ -58,5 +58,25 @@ export async function createTransaction(payload: CreateTransactionParams) {
 	return {
 		success: true,
 		message: 'Transação criada com sucesso.',
+	}
+}
+
+export async function deleteTransaction(transactionId: string) {
+	try {
+		await db
+			.delete(transactionsTable)
+			.where(eq(transactionsTable.id, transactionId))
+	} catch {
+		return {
+			success: false,
+			message: 'Erro ao deletar transação.',
+		}
+	}
+
+	revalidatePath('/')
+
+	return {
+		success: true,
+		message: 'Transação deletada com sucesso.',
 	}
 }
