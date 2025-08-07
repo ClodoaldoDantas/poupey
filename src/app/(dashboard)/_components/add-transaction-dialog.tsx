@@ -97,7 +97,7 @@ export function AddTransactionDialog() {
 				<Button
 					variant="outline"
 					size="lg"
-					className="text-base cursor-pointer"
+					className="text-base text-white cursor-pointer"
 				>
 					<BanknoteArrowUpIcon className="size-6" />
 					Adicionar

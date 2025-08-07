@@ -26,7 +26,7 @@ export function DeleteTransactionButton({
 		<Button
 			size="sm"
 			variant="outline"
-			className="text-foreground hover:text-red-600 hover:border-red-600"
+			className="hover:text-red-600 hover:border-red-600"
 			onClick={handleDeleteTransaction}
 		>
 			<Trash2Icon className="size-5" />
