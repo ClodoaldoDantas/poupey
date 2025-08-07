@@ -1,11 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
 import { TrendingDownIcon, TrendingUpIcon } from 'lucide-react'
+import { useAction } from 'next-safe-action/hooks'
 import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
 import { toast } from 'sonner'
 import { z } from 'zod'
-import { categories } from '@/components/category'
+import { categories } from '@/app/(dashboard)/_constants/categories'
 import { Button } from '@/components/ui/button'
 import {
 	Form,
@@ -23,7 +24,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
-import { createTransaction } from '../_actions/transactions'
+import { createTransaction } from '../_actions/create-transaction'
 
 const formSchema = z.object({
 	description: z.string().min(2, { message: 'Descrição é obrigatória.' }),
@@ -51,22 +52,24 @@ export function AddTransactionForm() {
 		defaultValues: initialState,
 	})
 
+	const createTransactionAction = useAction(createTransaction, {
+		onSuccess: () => {
+			toast.success('Transação criada com sucesso.')
+			form.reset(initialState)
+		},
+		onError: () => {
+			toast.error('Erro ao criar transação.')
+		},
+	})
+
 	async function handleCreateTransaction(values: FormData) {
-		const data = {
+		createTransactionAction.execute({
 			description: values.description,
 			category: values.category,
 			type: values.type,
 			amountInCents: values.amount * 100,
 			paymentDate: dayjs(values.paymentDate).toISOString(),
-		}
-
-		try {
-			await createTransaction(data)
-			toast.success('Transação criada com sucesso.')
-			form.reset(initialState)
-		} catch {
-			toast.error('Erro ao criar transação.')
-		}
+		})
 	}
 
 	return (

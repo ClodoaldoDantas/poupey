@@ -1,5 +1,4 @@
 import dayjs from 'dayjs'
-import { Category } from '@/components/category'
 import {
 	Table,
 	TableBody,
@@ -10,6 +9,7 @@ import {
 } from '@/components/ui/table'
 import type { Transaction } from '@/types/transaction'
 import { formatPrice } from '@/utils/format-price'
+import { type CategoryId, categories } from '../_constants/categories'
 import { DeleteTransactionButton } from './delete-transaction-button'
 
 export function TransactionsTable({
@@ -32,6 +32,8 @@ export function TransactionsTable({
 				<TableBody className="text-zinc-700">
 					{transactions.map((transaction) => {
 						const amount = formatPrice(transaction.amountInCents / 100)
+						const { name: categoryName, icon: CategoryIcon } =
+							categories[transaction.category as CategoryId]
 
 						return (
 							<TableRow key={transaction.id}>
@@ -42,7 +44,10 @@ export function TransactionsTable({
 									<TableCell className="text-green-600">{amount}</TableCell>
 								)}
 								<TableCell>
-									<Category categoryId={transaction.category} />
+									<div className="flex items-center gap-2.5">
+										<CategoryIcon className="size-5" />
+										<span>{categoryName}</span>
+									</div>
 								</TableCell>
 								<TableCell>
 									{dayjs(transaction.paymentDate).format('DD/MM/YYYY')}

@@ -3,7 +3,7 @@
 import { Trash2Icon } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
-import { deleteTransaction } from '../_actions/transactions'
+import { deleteTransaction } from '../_actions/delete-transaction'
 
 export function DeleteTransactionButton({
 	transactionId,

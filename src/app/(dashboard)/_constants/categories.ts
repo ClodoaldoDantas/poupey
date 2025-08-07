@@ -45,14 +45,3 @@ export const categories = {
 }
 
 export type CategoryId = keyof typeof categories
-
-export function Category({ categoryId }: { categoryId: CategoryId }) {
-	const { name, icon: Icon } = categories[categoryId]
-
-	return (
-		<div className="flex items-center gap-2.5">
-			<Icon className="size-5" />
-			<span>{name}</span>
-		</div>
-	)
-}

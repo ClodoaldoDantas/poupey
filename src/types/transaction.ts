@@ -1,4 +1,4 @@
-import type { CategoryId } from '@/components/category'
+import type { CategoryId } from '@/app/(dashboard)/_components/category'
 
 export type Transaction = {
 	id: string

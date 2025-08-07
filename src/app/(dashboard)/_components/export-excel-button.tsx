@@ -2,7 +2,7 @@
 
 import dayjs from 'dayjs'
 import { DownloadIcon } from 'lucide-react'
-import { categories } from '@/components/category'
+import { categories } from '@/app/(dashboard)/_components/category'
 import { Button } from '@/components/ui/button'
 import type { Transaction } from '@/types/transaction'
 import { downloadExcelFile, generateExcelFile } from '@/utils/excel'

@@ -1,6 +1,6 @@
 import type { SearchParams } from 'nuqs/server'
 import { loadSearchParams } from '@/utils/load-search-params'
-import { getTransactions } from './_actions/transactions'
+import { getTransactions } from './_actions/get-transactions'
 import { AddTransactionDialog } from './_components/add-transaction-dialog'
 import { ExportExcelButton } from './_components/export-excel-button'
 import { Header } from './_components/header'
