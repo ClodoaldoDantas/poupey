@@ -1,5 +1,5 @@
 import { Logo } from '@/components/logo'
-import { AddTransactionDialog } from './add-transaction-dialog'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { MonthYearPicker } from './month-year-picker'
 
 export function Header() {
@@ -8,7 +8,15 @@ export function Header() {
 			<div className="container mx-auto py-8 px-4 flex flex-wrap items-center justify-between">
 				<Logo />
 				<MonthYearPicker />
-				<AddTransactionDialog />
+
+				<div className="flex items-center gap-4">
+					<Avatar className="size-10">
+						<AvatarImage src="https://github.com/clodoaldodantas.png" />
+						<AvatarFallback>CN</AvatarFallback>
+					</Avatar>
+
+					<span className="text-white font-semibold">Clodoaldo Dantas</span>
+				</div>
 			</div>
 		</header>
 	)

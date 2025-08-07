@@ -1,6 +1,7 @@
 import type { SearchParams } from 'nuqs/server'
 import { loadSearchParams } from '@/utils/load-search-params'
 import { getTransactions } from './_actions/transactions'
+import { AddTransactionDialog } from './_components/add-transaction-dialog'
 import { ExportExcelButton } from './_components/export-excel-button'
 import { Header } from './_components/header'
 import { Summary } from './_components/summary'
@@ -21,7 +22,9 @@ export default async function Home({ searchParams }: HomeProps) {
 			<Summary transactions={transactions} />
 
 			<div className="container mx-auto mt-12 px-4">
-				<div className="flex items-center justify-end">
+				<div className="flex items-center gap-2 justify-end">
+					<AddTransactionDialog />
+
 					<ExportExcelButton
 						transactions={transactions}
 						month={month}

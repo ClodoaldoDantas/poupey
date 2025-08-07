@@ -40,7 +40,6 @@ export function ExportExcelButton({
 		<Button
 			onClick={handleExport}
 			variant="outline"
-			className="hover:text-green-600 hover:border-green-600"
 			disabled={transactions.length === 0}
 		>
 			<DownloadIcon className="size-5" />

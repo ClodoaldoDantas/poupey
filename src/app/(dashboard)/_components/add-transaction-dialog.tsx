@@ -16,12 +16,8 @@ export function AddTransactionDialog() {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button
-					variant="outline"
-					size="lg"
-					className="text-base text-white cursor-pointer"
-				>
-					<BanknoteArrowUpIcon className="size-6" />
+				<Button variant="outline">
+					<BanknoteArrowUpIcon className="size-5" />
 					Adicionar
 				</Button>
 			</DialogTrigger>
