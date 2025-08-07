@@ -7,12 +7,19 @@ import { Button } from '@/components/ui/button'
 import type { Transaction } from '@/types/transaction'
 import { downloadExcelFile, generateExcelFile } from '@/utils/excel'
 import { formatPrice } from '@/utils/format-price'
+import { months } from '../_constants/months'
+
+type ExportExcelButtonProps = {
+	transactions: Transaction[]
+	month: number
+	year: number
+}
 
 export function ExportExcelButton({
 	transactions,
-}: {
-	transactions: Transaction[]
-}) {
+	month,
+	year,
+}: ExportExcelButtonProps) {
 	function handleExport() {
 		const data = transactions.map((transaction) => ({
 			Motivo: transaction.description,
@@ -22,8 +29,11 @@ export function ExportExcelButton({
 			Tipo: transaction.type === 'expense' ? 'Despesa' : 'Receita',
 		}))
 
+		const monthName = months[month].toLowerCase()
+		const filename = `planilha-${monthName}-${year}`
+
 		const excelBuffer = generateExcelFile(data)
-		downloadExcelFile('dados', excelBuffer)
+		downloadExcelFile(filename, excelBuffer)
 	}
 
 	return (

@@ -18,21 +18,7 @@ import {
 } from '@/components/ui/select'
 import { getLastFiveYears } from '@/utils/get-last-five-years'
 import { monthYearSearchParams } from '@/utils/load-search-params'
-
-const months = [
-	'Janeiro',
-	'Fevereiro',
-	'Março',
-	'Abril',
-	'Maio',
-	'Junho',
-	'Julho',
-	'Agosto',
-	'Setembro',
-	'Outubro',
-	'Novembro',
-	'Dezembro',
-]
+import { months } from '../_constants/months'
 
 const lastFiveYears = getLastFiveYears()
 

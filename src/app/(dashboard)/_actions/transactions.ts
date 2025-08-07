@@ -44,39 +44,14 @@ type CreateTransactionParams = {
 }
 
 export async function createTransaction(payload: CreateTransactionParams) {
-	try {
-		await db.insert(transactionsTable).values(payload)
-	} catch {
-		return {
-			success: false,
-			message: 'Erro ao criar transação.',
-		}
-	}
-
+	await db.insert(transactionsTable).values(payload)
 	revalidatePath('/')
-
-	return {
-		success: true,
-		message: 'Transação criada com sucesso.',
-	}
 }
 
 export async function deleteTransaction(transactionId: string) {
-	try {
-		await db
-			.delete(transactionsTable)
-			.where(eq(transactionsTable.id, transactionId))
-	} catch {
-		return {
-			success: false,
-			message: 'Erro ao deletar transação.',
-		}
-	}
+	await db
+		.delete(transactionsTable)
+		.where(eq(transactionsTable.id, transactionId))
 
 	revalidatePath('/')
-
-	return {
-		success: true,
-		message: 'Transação deletada com sucesso.',
-	}
 }

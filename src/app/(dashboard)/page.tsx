@@ -22,7 +22,11 @@ export default async function Home({ searchParams }: HomeProps) {
 
 			<div className="container mx-auto mt-12 px-4">
 				<div className="flex items-center justify-end">
-					<ExportExcelButton transactions={transactions} />
+					<ExportExcelButton
+						transactions={transactions}
+						month={month}
+						year={year}
+					/>
 				</div>
 			</div>
 

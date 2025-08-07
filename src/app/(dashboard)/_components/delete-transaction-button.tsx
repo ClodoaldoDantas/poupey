@@ -12,12 +12,11 @@ export function DeleteTransactionButton({
 }) {
 	const handleDeleteTransaction = async () => {
 		if (window.confirm('Tem certeza que deseja excluir esta transação?')) {
-			const result = await deleteTransaction(transactionId)
-
-			if (result.success) {
-				toast.success(result.message)
-			} else {
-				toast.error(result.message)
+			try {
+				await deleteTransaction(transactionId)
+				toast.success('Transação excluída com sucesso.')
+			} catch {
+				toast.error('Erro ao excluir transação.')
 			}
 		}
 	}
