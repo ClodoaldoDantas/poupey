@@ -18,7 +18,6 @@ export default async function Home({ searchParams }: HomeProps) {
 	return (
 		<>
 			<Header />
-
 			<Summary transactions={transactions} />
 
 			<div className="container mx-auto mt-12 px-4">

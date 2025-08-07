@@ -2,8 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
 import { TrendingDownIcon, TrendingUpIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
+import { NumericFormat } from 'react-number-format'
 import { toast } from 'sonner'
-import { useHookFormMask } from 'use-mask-input'
 import { z } from 'zod'
 import { categories } from '@/components/category'
 import { Button } from '@/components/ui/button'
@@ -16,7 +16,6 @@ import {
 	FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import {
 	Select,
 	SelectContent,
@@ -28,7 +27,9 @@ import { createTransaction } from '../_actions/transactions'
 
 const formSchema = z.object({
 	description: z.string().min(2, { message: 'Descrição é obrigatória.' }),
-	amount: z.string().min(1, { message: 'Valor é obrigatório.' }),
+	amount: z
+		.number({ error: 'Valor é inválido' })
+		.min(1, { message: 'Valor é obrigatório.' }),
 	type: z.enum(['income', 'expense']),
 	category: z.string().min(1, { message: 'Categoria é obrigatória.' }),
 	paymentDate: z.string().min(1, { message: 'Data é obrigatória.' }),
@@ -38,16 +39,10 @@ type FormData = z.infer<typeof formSchema>
 
 const initialState: FormData = {
 	description: '',
-	amount: '',
+	amount: 0,
 	category: '',
 	type: 'expense',
 	paymentDate: dayjs().format('YYYY-MM-DD'),
-}
-
-const currencyBrlStringToCents = (value: string): number => {
-	const normalizedAmount = value.replace(/\./g, '').replace(',', '.')
-	const amount = Number(normalizedAmount)
-	return amount * 100
 }
 
 export function AddTransactionForm() {
@@ -56,14 +51,12 @@ export function AddTransactionForm() {
 		defaultValues: initialState,
 	})
 
-	const registerWithMask = useHookFormMask(form.register)
-
 	async function handleCreateTransaction(values: FormData) {
 		const data = {
 			description: values.description,
 			category: values.category,
 			type: values.type,
-			amountInCents: currencyBrlStringToCents(values.amount),
+			amountInCents: values.amount * 100,
 			paymentDate: dayjs(values.paymentDate).toISOString(),
 		}
 
@@ -96,7 +89,34 @@ export function AddTransactionForm() {
 					)}
 				/>
 
-				<div className="grid gap-2">
+				<FormField
+					control={form.control}
+					name="amount"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Valor</FormLabel>
+							<FormControl>
+								<NumericFormat
+									value={field.value}
+									onValueChange={(value) => {
+										field.onChange(value.floatValue)
+									}}
+									decimalScale={2}
+									fixedDecimalScale
+									decimalSeparator=","
+									allowNegative={false}
+									allowLeadingZeros={false}
+									thousandSeparator="."
+									customInput={Input}
+									prefix="R$"
+								/>
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+
+				{/* <div className="grid gap-2">
 					<Label htmlFor="amount">Valor</Label>
 
 					<Input
@@ -112,7 +132,7 @@ export function AddTransactionForm() {
 							{form.formState.errors.amount.message}
 						</p>
 					)}
-				</div>
+				</div> */}
 
 				<FormField
 					control={form.control}
