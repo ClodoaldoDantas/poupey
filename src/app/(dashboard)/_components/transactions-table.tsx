@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/table'
 import type { Transaction } from '@/types/transaction'
 import { formatPrice } from '@/utils/format-price'
-import { type CategoryId, categories } from '../_constants/categories'
+import { categories } from '../_constants/categories'
 import { DeleteTransactionButton } from './delete-transaction-button'
 
 export function TransactionsTable({
@@ -33,7 +33,7 @@ export function TransactionsTable({
 					{transactions.map((transaction) => {
 						const amount = formatPrice(transaction.amountInCents / 100)
 						const { name: categoryName, icon: CategoryIcon } =
-							categories[transaction.category as CategoryId]
+							categories[transaction.category]
 
 						return (
 							<TableRow key={transaction.id}>

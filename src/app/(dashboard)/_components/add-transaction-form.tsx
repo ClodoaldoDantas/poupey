@@ -119,24 +119,6 @@ export function AddTransactionForm() {
 					)}
 				/>
 
-				{/* <div className="grid gap-2">
-					<Label htmlFor="amount">Valor</Label>
-
-					<Input
-						id="amount"
-						placeholder="R$ 0,00"
-						{...registerWithMask('amount', 'brl-currency', {
-							rightAlign: false,
-						})}
-					/>
-
-					{form.formState.errors.amount && (
-						<p className="text-destructive text-sm">
-							{form.formState.errors.amount.message}
-						</p>
-					)}
-				</div> */}
-
 				<FormField
 					control={form.control}
 					name="type"
