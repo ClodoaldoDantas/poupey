@@ -4,12 +4,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
 import {
 	BanknoteArrowUpIcon,
-	PlusCircleIcon,
 	TrendingDownIcon,
 	TrendingUpIcon,
 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import { useHookFormMask } from 'use-mask-input'
 import { z } from 'zod'
 import { categories } from '@/components/category'
 import { Button } from '@/components/ui/button'
@@ -30,6 +30,7 @@ import {
 	FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import {
 	Select,
 	SelectContent,
@@ -57,18 +58,26 @@ const initialState: FormData = {
 	paymentDate: dayjs().format('YYYY-MM-DD'),
 }
 
+const currencyBrlStringToCents = (value: string): number => {
+	const normalizedAmount = value.replace(/\./g, '').replace(',', '.')
+	const amount = Number(normalizedAmount)
+	return amount * 100
+}
+
 export function AddTransactionDialog() {
 	const form = useForm<FormData>({
 		resolver: zodResolver(formSchema),
 		defaultValues: initialState,
 	})
 
+	const registerWithMask = useHookFormMask(form.register)
+
 	async function handleCreateTransaction(values: FormData) {
 		const data = {
 			description: values.description,
 			category: values.category,
 			type: values.type,
-			amountInCents: Number(values.amount) * 100,
+			amountInCents: currencyBrlStringToCents(values.amount),
 			paymentDate: dayjs(values.paymentDate).toISOString(),
 		}
 
@@ -121,19 +130,23 @@ export function AddTransactionDialog() {
 							)}
 						/>
 
-						<FormField
-							control={form.control}
-							name="amount"
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel>Valor</FormLabel>
-									<FormControl>
-										<Input type="number" {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
+						<div className="grid gap-2">
+							<Label htmlFor="amount">Valor</Label>
+
+							<Input
+								id="amount"
+								placeholder="R$ 0,00"
+								{...registerWithMask('amount', 'brl-currency', {
+									rightAlign: false,
+								})}
+							/>
+
+							{form.formState.errors.amount && (
+								<p className="text-destructive text-sm">
+									{form.formState.errors.amount.message}
+								</p>
 							)}
-						/>
+						</div>
 
 						<FormField
 							control={form.control}
