@@ -1,3 +1,5 @@
+'use client'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
 import { TrendingDownIcon, TrendingUpIcon } from 'lucide-react'

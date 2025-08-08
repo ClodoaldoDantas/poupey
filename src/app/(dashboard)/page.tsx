@@ -1,8 +1,9 @@
 import { InboxIcon } from 'lucide-react'
 import type { SearchParams } from 'nuqs/server'
 import { loadSearchParams } from '@/app/(dashboard)/_helpers/load-search-params'
+import { FormDialog } from '@/components/form-dialog'
 import { getTransactions } from './_actions/get-transactions'
-import { AddTransactionDialog } from './_components/add-transaction-dialog'
+import { AddTransactionForm } from './_components/add-transaction-form'
 import { ExportExcelButton } from './_components/export-excel-button'
 import { Header } from './_components/header'
 import { Summary } from './_components/summary'
@@ -23,7 +24,9 @@ export default async function Home({ searchParams }: HomeProps) {
 
 			<div className="container mx-auto mt-12 px-4">
 				<div className="flex items-center gap-2 justify-end">
-					<AddTransactionDialog />
+					<FormDialog type="add">
+						<AddTransactionForm />
+					</FormDialog>
 
 					<ExportExcelButton
 						transactions={transactions}
