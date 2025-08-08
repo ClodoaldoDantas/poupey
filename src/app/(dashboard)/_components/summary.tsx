@@ -1,6 +1,6 @@
-import { useSummary } from '@/hooks/use-summary'
+import { formatPrice } from '@/app/(dashboard)/_helpers/format-price'
+import { useSummary } from '@/app/(dashboard)/_hooks/use-summary'
 import type { Transaction } from '@/types/transaction'
-import { formatPrice } from '@/utils/format-price'
 import { SummaryCard } from './summary-card'
 
 export function Summary({ transactions }: { transactions: Transaction[] }) {

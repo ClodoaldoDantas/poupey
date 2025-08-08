@@ -1,5 +1,6 @@
+import { InboxIcon } from 'lucide-react'
 import type { SearchParams } from 'nuqs/server'
-import { loadSearchParams } from '@/utils/load-search-params'
+import { loadSearchParams } from '@/app/(dashboard)/_helpers/load-search-params'
 import { getTransactions } from './_actions/get-transactions'
 import { AddTransactionDialog } from './_components/add-transaction-dialog'
 import { ExportExcelButton } from './_components/export-excel-button'
@@ -32,7 +33,18 @@ export default async function Home({ searchParams }: HomeProps) {
 				</div>
 			</div>
 
-			<TransactionsTable transactions={transactions} />
+			{transactions.length === 0 ? (
+				<div className="container mx-auto mt-12 px-4">
+					<div className="h-40 flex flex-col items-center justify-center gap-2 border-dashed border-2 border-gray-300 rounded-lg">
+						<InboxIcon className="size-8 text-muted-foreground" />
+						<p className="text-lg text-center text-muted-foreground">
+							Nenhuma transação encontrada.
+						</p>
+					</div>
+				</div>
+			) : (
+				<TransactionsTable transactions={transactions} />
+			)}
 		</>
 	)
 }

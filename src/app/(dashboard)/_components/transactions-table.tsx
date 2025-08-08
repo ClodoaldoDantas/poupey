@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { formatPrice } from '@/app/(dashboard)/_helpers/format-price'
 import {
 	Table,
 	TableBody,
@@ -8,7 +9,6 @@ import {
 	TableRow,
 } from '@/components/ui/table'
 import type { Transaction } from '@/types/transaction'
-import { formatPrice } from '@/utils/format-price'
 import { categories } from '../_constants/categories'
 import { DeleteTransactionButton } from './delete-transaction-button'
 
