@@ -1,6 +1,5 @@
 import dayjs from 'dayjs'
 import { formatPrice } from '@/app/(dashboard)/_helpers/format-price'
-import { FormDialog } from '@/components/form-dialog'
 import {
 	Table,
 	TableBody,
@@ -12,6 +11,7 @@ import {
 import type { Transaction } from '@/types/transaction'
 import { categories } from '../_constants/categories'
 import { DeleteTransactionButton } from './delete-transaction-button'
+import { EditTransactionDialog } from './edit-transaction-dialog'
 
 export function TransactionsTable({
 	transactions,
@@ -54,10 +54,7 @@ export function TransactionsTable({
 									{dayjs(transaction.paymentDate).format('DD/MM/YYYY')}
 								</TableCell>
 								<TableCell className="flex items-center gap-2">
-									<FormDialog type="edit">
-										<span>Formulário de edição</span>
-									</FormDialog>
-
+									<EditTransactionDialog transaction={transaction} />
 									<DeleteTransactionButton transactionId={transaction.id} />
 								</TableCell>
 							</TableRow>

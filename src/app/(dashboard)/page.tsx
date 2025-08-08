@@ -1,7 +1,15 @@
-import { InboxIcon } from 'lucide-react'
+import { BanknoteArrowUpIcon, InboxIcon } from 'lucide-react'
 import type { SearchParams } from 'nuqs/server'
 import { loadSearchParams } from '@/app/(dashboard)/_helpers/load-search-params'
-import { FormDialog } from '@/components/form-dialog'
+import { Button } from '@/components/ui/button'
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from '@/components/ui/dialog'
 import { getTransactions } from './_actions/get-transactions'
 import { AddTransactionForm } from './_components/add-transaction-form'
 import { ExportExcelButton } from './_components/export-excel-button'
@@ -24,9 +32,24 @@ export default async function Home({ searchParams }: HomeProps) {
 
 			<div className="container mx-auto mt-12 px-4">
 				<div className="flex items-center gap-2 justify-end">
-					<FormDialog type="add">
-						<AddTransactionForm />
-					</FormDialog>
+					<Dialog>
+						<DialogTrigger asChild>
+							<Button variant="outline">
+								<BanknoteArrowUpIcon className="size-5" />
+								Adicionar
+							</Button>
+						</DialogTrigger>
+						<DialogContent>
+							<DialogHeader>
+								<DialogTitle>Nova Transação</DialogTitle>
+								<DialogDescription>
+									Adicione uma nova transação à sua conta.
+								</DialogDescription>
+							</DialogHeader>
+
+							<AddTransactionForm />
+						</DialogContent>
+					</Dialog>
 
 					<ExportExcelButton
 						transactions={transactions}
