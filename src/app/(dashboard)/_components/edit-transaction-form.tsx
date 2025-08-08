@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
-import { TrendingDownIcon, TrendingUpIcon } from 'lucide-react'
+import { LoaderIcon, TrendingDownIcon, TrendingUpIcon } from 'lucide-react'
 import { useAction } from 'next-safe-action/hooks'
 import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
@@ -71,7 +71,7 @@ export function EditTransactionForm({
 		},
 	})
 
-	async function handleUpdateTransaction(values: FormData) {
+	function handleUpdateTransaction(values: FormData) {
 		updateTransactionAction.execute({
 			id: transaction.id,
 			description: values.description,
@@ -200,7 +200,12 @@ export function EditTransactionForm({
 					)}
 				/>
 
-				<Button type="submit">Salvar</Button>
+				<Button type="submit" disabled={updateTransactionAction.isPending}>
+					{updateTransactionAction.isPending && (
+						<LoaderIcon className="size-5 animate-spin" />
+					)}
+					{updateTransactionAction.isPending ? 'Atualizando' : 'Atualizar'}
+				</Button>
 			</form>
 		</Form>
 	)

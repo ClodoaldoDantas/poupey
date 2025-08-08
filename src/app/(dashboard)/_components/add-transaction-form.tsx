@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
-import { TrendingDownIcon, TrendingUpIcon } from 'lucide-react'
+import { LoaderIcon, TrendingDownIcon, TrendingUpIcon } from 'lucide-react'
 import { useAction } from 'next-safe-action/hooks'
 import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
@@ -64,7 +64,7 @@ export function AddTransactionForm() {
 		},
 	})
 
-	async function handleCreateTransaction(values: FormData) {
+	function handleCreateTransaction(values: FormData) {
 		createTransactionAction.execute({
 			description: values.description,
 			category: values.category,
@@ -192,7 +192,12 @@ export function AddTransactionForm() {
 					)}
 				/>
 
-				<Button type="submit">Salvar</Button>
+				<Button type="submit" disabled={createTransactionAction.isPending}>
+					{createTransactionAction.isPending && (
+						<LoaderIcon className="size-5 animate-spin" />
+					)}
+					{createTransactionAction.isPending ? 'Salvando' : 'Salvar'}
+				</Button>
 			</form>
 		</Form>
 	)
