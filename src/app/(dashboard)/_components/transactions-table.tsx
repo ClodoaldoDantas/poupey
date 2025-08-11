@@ -19,7 +19,7 @@ export function TransactionsTable({
 	transactions: Transaction[]
 }) {
 	return (
-		<section className="container my-2 mx-auto px-4">
+		<section className="container mt-2 mb-20 mx-auto px-4">
 			<Table className="text-base">
 				<TableHeader>
 					<TableRow>

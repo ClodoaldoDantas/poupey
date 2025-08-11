@@ -60,7 +60,7 @@ export default async function Home({ searchParams }: HomeProps) {
 			</div>
 
 			{transactions.length === 0 ? (
-				<div className="container mx-auto mt-12 px-4">
+				<div className="container mx-auto my-12 px-4">
 					<div className="h-40 flex flex-col items-center justify-center gap-2 border-dashed border-2 border-gray-300 rounded-lg">
 						<InboxIcon className="size-8 text-muted-foreground" />
 						<p className="text-lg text-center text-muted-foreground">

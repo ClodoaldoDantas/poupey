@@ -1,5 +1,6 @@
 import {
 	AppleIcon,
+	CarIcon,
 	GraduationCapIcon,
 	HeartPlusIcon,
 	HelpCircleIcon,
@@ -7,6 +8,7 @@ import {
 	Laptop2Icon,
 	PiggyBankIcon,
 	PopcornIcon,
+	ShoppingBagIcon,
 } from 'lucide-react'
 
 export const categories = {
@@ -37,6 +39,14 @@ export const categories = {
 	work: {
 		name: 'Trabalho',
 		icon: Laptop2Icon,
+	},
+	shopping: {
+		name: 'Compras',
+		icon: ShoppingBagIcon,
+	},
+	transport: {
+		name: 'Transporte',
+		icon: CarIcon,
 	},
 	others: {
 		name: 'Outros',

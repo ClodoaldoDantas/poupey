@@ -46,7 +46,7 @@ export function ExportExcelButton({
 			disabled={transactions.length === 0}
 		>
 			<DownloadIcon className="size-5" />
-			Exportar para Excel
+			Exportar
 		</Button>
 	)
 }
