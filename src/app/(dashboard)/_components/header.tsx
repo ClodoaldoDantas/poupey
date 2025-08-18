@@ -1,4 +1,4 @@
-import { Logo } from '@/components/logo'
+import { Logo } from '@/app/(dashboard)/_components/logo'
 import { MonthYearPicker } from './month-year-picker'
 import { Profile } from './profile'
 
