@@ -1,8 +1,10 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { WalletIcon } from 'lucide-react'
+import { LoaderIcon, WalletIcon } from 'lucide-react'
+import { useAction } from 'next-safe-action/hooks'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import {
@@ -22,9 +24,12 @@ import {
 	FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { login } from '../_actions/login'
 
 const formSchema = z.object({
-	email: z.email('E-mail inválido'),
+	username: z
+		.string()
+		.min(3, { message: 'Usuário deve ter pelo menos 3 caracteres.' }),
 	password: z
 		.string()
 		.min(6, { message: 'Senha deve ter pelo menos 6 caracteres.' }),
@@ -36,13 +41,24 @@ export function SignInForm() {
 	const form = useForm<FormData>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
-			email: '',
+			username: '',
 			password: '',
 		},
 	})
 
+	const loginAction = useAction(login, {
+		onError: ({ error }) => {
+			const errorMessage =
+				error.validationErrors?._errors?.[0] ?? 'Erro ao fazer login.'
+			toast.error(errorMessage)
+		},
+	})
+
 	function handleSignIn(values: FormData) {
-		console.log(values)
+		loginAction.execute({
+			username: values.username,
+			password: values.password,
+		})
 	}
 
 	return (
@@ -63,10 +79,10 @@ export function SignInForm() {
 					<CardContent className="space-y-4">
 						<FormField
 							control={form.control}
-							name="email"
+							name="username"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>E-mail</FormLabel>
+									<FormLabel>Usuário</FormLabel>
 									<FormControl>
 										<Input {...field} />
 									</FormControl>
@@ -90,8 +106,15 @@ export function SignInForm() {
 						/>
 					</CardContent>
 					<CardFooter className="mt-6">
-						<Button type="submit" className="w-full">
-							Entrar
+						<Button
+							type="submit"
+							className="w-full"
+							disabled={loginAction.isPending}
+						>
+							{loginAction.isPending && (
+								<LoaderIcon className="size-5 animate-spin" />
+							)}
+							{loginAction.isPending ? 'Entrando...' : 'Entrar'}
 						</Button>
 					</CardFooter>
 				</form>
