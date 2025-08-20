@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
 import { toast } from 'sonner'
 import { z } from 'zod'
-import { categories } from '@/app/(dashboard)/_constants/categories'
+import { categories } from '@/app/dashboard/_constants/categories'
 import { Button } from '@/components/ui/button'
 import {
 	Form,
@@ -26,7 +26,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
-import { createTransaction } from '../_actions/create-transaction'
+import type { Transaction } from '@/types/transaction'
+import { updateTransaction } from '../_actions/update-transaction'
 
 const formSchema = z.object({
 	description: z.string().min(2, { message: 'Descrição é obrigatória.' }),
@@ -40,32 +41,39 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>
 
-const initialState: FormData = {
-	description: '',
-	amount: 0,
-	category: '',
-	type: 'expense',
-	paymentDate: dayjs().format('YYYY-MM-DD'),
+type EditTransactionFormProps = {
+	transaction: Transaction
+	onSuccess?: () => void
 }
 
-export function AddTransactionForm() {
+export function EditTransactionForm({
+	transaction,
+	onSuccess,
+}: EditTransactionFormProps) {
 	const form = useForm<FormData>({
 		resolver: zodResolver(formSchema),
-		defaultValues: initialState,
+		defaultValues: {
+			description: transaction.description,
+			amount: transaction.amountInCents / 100,
+			type: transaction.type,
+			category: transaction.category,
+			paymentDate: dayjs(transaction.paymentDate).format('YYYY-MM-DD'),
+		},
 	})
 
-	const createTransactionAction = useAction(createTransaction, {
+	const updateTransactionAction = useAction(updateTransaction, {
 		onSuccess: () => {
-			toast.success('Transação criada com sucesso.')
-			form.reset(initialState)
+			toast.success('Transação atualizada com sucesso.')
+			onSuccess?.()
 		},
 		onError: () => {
-			toast.error('Erro ao criar transação.')
+			toast.error('Erro ao atualizar transação.')
 		},
 	})
 
-	function handleCreateTransaction(values: FormData) {
-		createTransactionAction.execute({
+	function handleUpdateTransaction(values: FormData) {
+		updateTransactionAction.execute({
+			id: transaction.id,
 			description: values.description,
 			category: values.category,
 			type: values.type,
@@ -77,7 +85,7 @@ export function AddTransactionForm() {
 	return (
 		<Form {...form}>
 			<form
-				onSubmit={form.handleSubmit(handleCreateTransaction)}
+				onSubmit={form.handleSubmit(handleUpdateTransaction)}
 				className="space-y-6"
 			>
 				<FormField
@@ -192,11 +200,11 @@ export function AddTransactionForm() {
 					)}
 				/>
 
-				<Button type="submit" disabled={createTransactionAction.isPending}>
-					{createTransactionAction.isPending && (
+				<Button type="submit" disabled={updateTransactionAction.isPending}>
+					{updateTransactionAction.isPending && (
 						<LoaderIcon className="size-5 animate-spin" />
 					)}
-					{createTransactionAction.isPending ? 'Salvando' : 'Salvar'}
+					{updateTransactionAction.isPending ? 'Atualizando' : 'Atualizar'}
 				</Button>
 			</form>
 		</Form>

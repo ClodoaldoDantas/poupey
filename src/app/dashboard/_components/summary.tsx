@@ -1,5 +1,5 @@
-import { formatPrice } from '@/app/(dashboard)/_helpers/format-price'
-import { useSummary } from '@/app/(dashboard)/_hooks/use-summary'
+import { formatPrice } from '@/app/dashboard/_helpers/format-price'
+import { useSummary } from '@/app/dashboard/_hooks/use-summary'
 import type { Transaction } from '@/types/transaction'
 import { SummaryCard } from './summary-card'
 

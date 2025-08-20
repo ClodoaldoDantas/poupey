@@ -7,6 +7,7 @@ import { returnValidationErrors } from 'next-safe-action'
 import z from 'zod'
 import { db } from '@/db'
 import { usersTable } from '@/db/schema'
+import { createSession } from '@/lib/auth'
 import { actionClient } from '@/lib/safe-action'
 
 const loginSchema = z.object({
@@ -43,5 +44,6 @@ export const login = actionClient
 			})
 		}
 
+		await createSession(user.id)
 		redirect('/')
 	})

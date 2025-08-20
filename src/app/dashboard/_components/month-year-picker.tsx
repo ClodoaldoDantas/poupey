@@ -2,8 +2,8 @@
 
 import { ChevronDownIcon } from 'lucide-react'
 import { useQueryState } from 'nuqs'
-import { getLastFiveYears } from '@/app/(dashboard)/_helpers/get-last-five-years'
-import { monthYearSearchParams } from '@/app/(dashboard)/_helpers/load-search-params'
+import { getLastFiveYears } from '@/app/dashboard/_helpers/get-last-five-years'
+import { monthYearSearchParams } from '@/app/dashboard/_helpers/load-search-params'
 import { Button } from '@/components/ui/button'
 import {
 	Popover,

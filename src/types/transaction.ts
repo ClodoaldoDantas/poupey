@@ -1,4 +1,4 @@
-import type { CategoryId } from '@/app/(dashboard)/_constants/categories'
+import type { CategoryId } from '@/app/dashboard/_constants/categories'
 
 export type Transaction = {
 	id: string
