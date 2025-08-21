@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { formatPrice } from '@/app/(dashboard)/_helpers/format-price'
+import { formatPrice } from '@/app/dashboard/_helpers/format-price'
 import {
 	Table,
 	TableBody,

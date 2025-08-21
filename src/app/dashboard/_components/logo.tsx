@@ -4,7 +4,7 @@ import Link from 'next/link'
 export function Logo() {
 	return (
 		<Link
-			href="/"
+			href="/dashboard"
 			className="text-white flex items-center gap-2 w-full sm:w-fit mb-4 sm:mb-0"
 		>
 			<WalletIcon className="size-8" />

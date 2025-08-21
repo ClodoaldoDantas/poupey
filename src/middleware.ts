@@ -1,29 +1,22 @@
 import { type NextRequest, NextResponse } from 'next/server'
+import { getSession } from './lib/auth'
 
-const BASIC_AUTH_USER = process.env.AUTH_USER
-const BASIC_AUTH_PASS = process.env.AUTH_PASSWORD
+const publicRoutes = ['/sign-in']
+const protectedRoutes = ['/dashboard']
 
-export function middleware(request: NextRequest) {
-	const authHeader = request.headers.get('authorization')
+export async function middleware(request: NextRequest) {
+	const path = request.nextUrl.pathname
+	const isProtectedRoute = protectedRoutes.includes(path)
 
-	if (!authHeader || !authHeader.startsWith('Basic ')) {
-		return new NextResponse('Unauthorized', {
-			status: 401,
-			headers: {
-				'WWW-Authenticate': 'Basic realm="Dashboard Access"',
-			},
-		})
+	const isPublicRoute = publicRoutes.includes(path)
+	const session = await getSession()
+
+	if (isProtectedRoute && !session?.userId) {
+		return NextResponse.redirect(new URL('/sign-in', request.nextUrl))
 	}
 
-	const base64Credentials = authHeader.split(' ')[1]
-	const credentials = Buffer.from(base64Credentials, 'base64').toString('utf-8')
-	const [username, password] = credentials.split(':')
-
-	const isAuthorized =
-		username === BASIC_AUTH_USER && password === BASIC_AUTH_PASS
-
-	if (!isAuthorized) {
-		return new NextResponse('Unauthorized', { status: 401 })
+	if (isPublicRoute && session?.userId) {
+		return NextResponse.redirect(new URL('/dashboard', request.nextUrl))
 	}
 
 	return NextResponse.next()

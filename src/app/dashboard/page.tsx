@@ -1,6 +1,6 @@
 import { BanknoteArrowUpIcon, InboxIcon } from 'lucide-react'
 import type { SearchParams } from 'nuqs/server'
-import { loadSearchParams } from '@/app/(dashboard)/_helpers/load-search-params'
+import { loadSearchParams } from '@/app/dashboard/_helpers/load-search-params'
 import { Button } from '@/components/ui/button'
 import {
 	Dialog,
