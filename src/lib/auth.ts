@@ -33,6 +33,10 @@ export async function getSession() {
 	const cookieStore = await cookies()
 	const session = cookieStore.get('session')?.value
 
+	if (!session) {
+		return
+	}
+
 	return decrypt(session)
 }
 
