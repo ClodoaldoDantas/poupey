@@ -45,5 +45,5 @@ export const login = actionClient
 		}
 
 		await createSession(user.id)
-		redirect('/')
+		redirect('/dashboard')
 	})
