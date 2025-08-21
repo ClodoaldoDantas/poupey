@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache'
 import z from 'zod'
 import { db } from '@/db'
 import { transactionsTable } from '@/db/schema'
+import { getSession } from '@/lib/auth'
 import { actionClient } from '@/lib/safe-action'
 
 const updateTransactionSchema = z.object({
@@ -21,6 +22,25 @@ const updateTransactionSchema = z.object({
 export const updateTransaction = actionClient
 	.inputSchema(updateTransactionSchema)
 	.action(async ({ parsedInput }) => {
+		const session = await getSession()
+
+		if (!session?.userId) {
+			throw new Error('Usuário não autenticado.')
+		}
+
+		const [transaction] = await db
+			.select()
+			.from(transactionsTable)
+			.where(eq(transactionsTable.id, parsedInput.id))
+
+		if (!transaction) {
+			throw new Error('Transação não encontrada.')
+		}
+
+		if (transaction.userId !== session.userId) {
+			throw new Error('Usuário não autorizado.')
+		}
+
 		await db
 			.update(transactionsTable)
 			.set({
