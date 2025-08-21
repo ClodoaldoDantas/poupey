@@ -6,12 +6,15 @@ Um sistema de controle financeiro pessoal moderno e intuitivo, desenvolvido com 
 
 ## ✨ Funcionalidades
 
-- **📊 Dashboard Financeiro**: Visualização completa das suas finanças com resumos mensais
+- **� Sistema de Autenticação**: Login seguro com sessões JWT e proteção de rotas
+- **👤 Perfil do Usuário**: Gestão personalizada de dados financeiros por usuário
+- **📈 Dashboard Financeiro**: Visualização completa das suas finanças com resumos mensais
 - **💸 Gestão de Transações**: Adicione, edite e delete receitas e despesas
 - **🏷️ Categorização**: Organize suas transações por categorias (Alimentação, Saúde, Educação, Casa, Lazer, etc.)
 - **📅 Filtros Avançados**: Filtre transações por mês e ano
 - **📈 Resumo Financeiro**: Cards com total de receitas, despesas e saldo
 - **📤 Exportação Excel**: Exporte seus dados financeiros para planilhas
+- **🔒 Proteção de Dados**: Cada usuário acessa apenas suas próprias transações
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -27,6 +30,11 @@ Um sistema de controle financeiro pessoal moderno e intuitivo, desenvolvido com 
 - **[Drizzle ORM](https://orm.drizzle.team/)** - ORM TypeScript-first
 - **[SQLite](https://www.sqlite.org/)** - Banco de dados local
 - **[Drizzle Kit](https://orm.drizzle.team/kit-docs/overview)** - Migrations e introspection
+
+### Autenticação & Segurança
+- **[José](https://github.com/panva/jose)** - JWT tokens seguros para sessões
+- **[bcryptjs](https://github.com/dcodeIO/bcrypt.js)** - Hash de senhas
+- **Middleware Next.js** - Proteção de rotas e controle de acesso
 
 ### Formulários & Validação
 - **[React Hook Form](https://react-hook-form.com/)** - Gerenciamento de formulários
@@ -75,6 +83,15 @@ cp .env.example .env.local
 
 Edite o arquivo `.env.local` com suas configurações:
 
+```env
+# Chave secreta para JWT (use uma chave forte em produção)
+SESSION_SECRET=your-secret-key-here
+
+# Configurações do banco de dados (Turso)
+TURSO_CONNECTION_URL=your-turso-connection-url
+TURSO_AUTH_TOKEN=your-turso-auth-token
+```
+
 ### 4. Configure o banco de dados
 ```bash
 # Gera as migrações do Drizzle
@@ -109,7 +126,6 @@ npm run lint             # Executa o linter
 npx drizzle-kit generate # Gera migrations do Drizzle
 npx drizzle-kit migrate  # Executa migrations
 npx drizzle-kit studio   # Abre o Drizzle Studio (GUI)
-npx tsx src/db/seed.ts   # Popula banco com dados de exemplo
 ```
 
 ## 📝 Licença
