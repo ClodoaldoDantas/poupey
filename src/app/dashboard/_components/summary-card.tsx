@@ -19,7 +19,7 @@ const icons = {
 
 export function SummaryCard({ type, value }: SummaryCardProps) {
 	return (
-		<div className="w-full bg-white shadow-md p-6 rounded flex flex-col gap-4">
+		<div className="w-[300px] md:w-auto shrink-0 md:flex-1/3 bg-white shadow-md p-6 rounded flex flex-col gap-4">
 			<div className="flex items-center justify-between">
 				<span className="block text-zinc-600">{labels[type]}</span>
 				{icons[type]}

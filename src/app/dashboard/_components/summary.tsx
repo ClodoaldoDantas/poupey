@@ -12,7 +12,7 @@ export function Summary({ transactions }: { transactions: Transaction[] }) {
 
 	return (
 		<div className="container mx-auto px-4 mt-[-80px]">
-			<div className="grid lg:grid-cols-3 gap-2 lg:gap-8">
+			<div className="flex items-center gap-2 overflow-x-auto pb-5">
 				<SummaryCard type="income" value={formattedIncome} />
 				<SummaryCard type="expense" value={formattedExpense} />
 				<SummaryCard type="balance" value={formattedBalance} />
