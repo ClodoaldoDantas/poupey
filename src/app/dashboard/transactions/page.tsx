@@ -1,7 +1,7 @@
 import { ArrowLeftIcon, InboxIcon } from 'lucide-react'
-import Link from 'next/link'
 import type { SearchParams } from 'nuqs/server'
 import { getTransactions } from '@/actions/get-transactions'
+import { PreserveQueryLink } from '@/components/preserve-query-link'
 import { Button } from '@/components/ui/button'
 import { loadSearchParams } from '@/helpers/load-search-params'
 import { Header } from '../_components/header'
@@ -26,10 +26,10 @@ export default async function DashboardTransactionsPage({
 			<div className="container mx-auto mt-6 px-4">
 				<div className="flex items-center justify-between">
 					<Button variant="outline" asChild>
-						<Link href="/dashboard">
+						<PreserveQueryLink href="/dashboard">
 							<ArrowLeftIcon />
 							Voltar para o Dashboard
-						</Link>
+						</PreserveQueryLink>
 					</Button>
 
 					<div className="flex items-center gap-2 justify-end">

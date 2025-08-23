@@ -1,6 +1,6 @@
 import { PiggyBankIcon } from 'lucide-react'
-import Link from 'next/link'
 import { getProfile } from '@/actions/get-profile'
+import { PreserveQueryLink } from '@/components/preserve-query-link'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
@@ -35,10 +35,10 @@ export async function Profile() {
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-56" align="start">
 				<DropdownMenuItem asChild>
-					<Link href="/dashboard/transactions">
+					<PreserveQueryLink href="/dashboard/transactions">
 						<PiggyBankIcon className="size-5 text-foreground" />
 						Minhas Transações
-					</Link>
+					</PreserveQueryLink>
 				</DropdownMenuItem>
 
 				<LogoutButton />
