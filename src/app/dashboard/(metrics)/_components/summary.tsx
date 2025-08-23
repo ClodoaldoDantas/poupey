@@ -1,10 +1,29 @@
+import { useMemo } from 'react'
 import { formatPrice } from '@/helpers/format-price'
-import { useSummary } from '@/hooks/use-summary'
 import type { Transaction } from '@/types/transaction'
 import { SummaryCard } from './summary-card'
 
 export function Summary({ transactions }: { transactions: Transaction[] }) {
-	const { summary } = useSummary(transactions)
+	const summary = useMemo(() => {
+		return transactions.reduce(
+			(acc, transaction) => {
+				if (transaction.type === 'income') {
+					acc.income += transaction.amountInCents
+					acc.balance += transaction.amountInCents
+				} else {
+					acc.expense += transaction.amountInCents
+					acc.balance -= transaction.amountInCents
+				}
+
+				return acc
+			},
+			{
+				income: 0,
+				expense: 0,
+				balance: 0,
+			},
+		)
+	}, [transactions])
 
 	const formattedIncome = formatPrice(summary.income / 100)
 	const formattedExpense = formatPrice(summary.expense / 100)
