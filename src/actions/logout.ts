@@ -5,5 +5,5 @@ import { deleteSession } from '@/lib/auth'
 
 export async function logout() {
 	await deleteSession()
-	redirect('/sign-in')
+	redirect('/login')
 }

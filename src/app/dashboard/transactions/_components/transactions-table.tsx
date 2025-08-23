@@ -1,5 +1,4 @@
 import dayjs from 'dayjs'
-import { formatPrice } from '@/app/dashboard/_helpers/format-price'
 import {
 	Table,
 	TableBody,
@@ -8,18 +7,19 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table'
+import { categories } from '@/constants/categories'
+import { formatPrice } from '@/helpers/format-price'
 import type { Transaction } from '@/types/transaction'
-import { categories } from '../_constants/categories'
 import { DeleteTransactionButton } from './delete-transaction-button'
-import { EditTransactionDialog } from './edit-transaction-dialog'
+import { EditTransaction } from './edit-transaction'
 
-export function TransactionsTable({
-	transactions,
-}: {
+type TransactionsTableProps = {
 	transactions: Transaction[]
-}) {
+}
+
+export function TransactionsTable({ transactions }: TransactionsTableProps) {
 	return (
-		<section className="container mt-4 mb-20 mx-auto px-4">
+		<section className="container mt-6 mb-20 mx-auto px-4">
 			<Table className="text-base">
 				<TableHeader>
 					<TableRow>
@@ -54,7 +54,12 @@ export function TransactionsTable({
 									{dayjs(transaction.paymentDate).format('DD/MM/YYYY')}
 								</TableCell>
 								<TableCell className="flex items-center gap-2">
-									<EditTransactionDialog transaction={transaction} />
+									<EditTransaction.Root transaction={transaction}>
+										<EditTransaction.Dialog>
+											<EditTransaction.Form />
+										</EditTransaction.Dialog>
+									</EditTransaction.Root>
+
 									<DeleteTransactionButton transactionId={transaction.id} />
 								</TableCell>
 							</TableRow>

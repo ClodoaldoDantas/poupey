@@ -4,11 +4,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
 import { LoaderIcon, TrendingDownIcon, TrendingUpIcon } from 'lucide-react'
 import { useAction } from 'next-safe-action/hooks'
+import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
 import { toast } from 'sonner'
 import { z } from 'zod'
-import { categories } from '@/app/dashboard/_constants/categories'
+import { updateTransaction } from '@/actions/update-transaction'
 import { Button } from '@/components/ui/button'
 import {
 	Form,
@@ -26,8 +27,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
-import type { Transaction } from '@/types/transaction'
-import { updateTransaction } from '../_actions/update-transaction'
+import { categories } from '@/constants/categories'
+import { EditTransactionContext } from './edit-transaction-root'
 
 const formSchema = z.object({
 	description: z.string().min(2, { message: 'Descrição é obrigatória.' }),
@@ -41,15 +42,11 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>
 
-type EditTransactionFormProps = {
-	transaction: Transaction
-	onSuccess?: () => void
-}
+export function EditTransactionForm() {
+	const { transaction, handleOpenChangeDialog } = useContext(
+		EditTransactionContext,
+	)
 
-export function EditTransactionForm({
-	transaction,
-	onSuccess,
-}: EditTransactionFormProps) {
 	const form = useForm<FormData>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -64,7 +61,7 @@ export function EditTransactionForm({
 	const updateTransactionAction = useAction(updateTransaction, {
 		onSuccess: () => {
 			toast.success('Transação atualizada com sucesso.')
-			onSuccess?.()
+			handleOpenChangeDialog(false)
 		},
 		onError: () => {
 			toast.error('Erro ao atualizar transação.')

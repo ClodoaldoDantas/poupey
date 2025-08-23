@@ -1,14 +1,15 @@
+import { PiggyBankIcon } from 'lucide-react'
+import Link from 'next/link'
+import { getProfile } from '@/actions/get-profile'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
 	DropdownMenu,
 	DropdownMenuContent,
-	DropdownMenuGroup,
-	DropdownMenuLabel,
+	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { SignOutButton } from '../../(auth)/_components/sign-out-button'
-import { getProfile } from '../_actions/get-profile'
+import { LogoutButton } from './logout-button'
 
 export async function Profile() {
 	const profile = await getProfile()
@@ -33,10 +34,14 @@ export async function Profile() {
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-56" align="start">
-				<DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
-				<DropdownMenuGroup>
-					<SignOutButton />
-				</DropdownMenuGroup>
+				<DropdownMenuItem asChild>
+					<Link href="/dashboard/transactions">
+						<PiggyBankIcon className="size-5 text-foreground" />
+						Minhas Transações
+					</Link>
+				</DropdownMenuItem>
+
+				<LogoutButton />
 			</DropdownMenuContent>
 		</DropdownMenu>
 	)
