@@ -39,7 +39,7 @@ export function ExportExcelButton({
 	return (
 		<Button
 			onClick={handleExport}
-			variant="outline"
+			variant="secondary"
 			disabled={transactions.length === 0}
 		>
 			<DownloadIcon className="size-5" />

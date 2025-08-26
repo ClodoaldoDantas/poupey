@@ -14,7 +14,7 @@ export function AddTransactionDialog({ children }: { children: ReactNode }) {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button variant="outline">
+				<Button>
 					<BanknoteArrowUpIcon className="size-5" />
 					Adicionar
 				</Button>

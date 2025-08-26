@@ -19,7 +19,7 @@ type TransactionsTableProps = {
 
 export function TransactionsTable({ transactions }: TransactionsTableProps) {
 	return (
-		<Table className="mt-6 mb-12 text-base">
+		<Table className="text-base">
 			<TableHeader>
 				<TableRow>
 					<TableHead className="font-semibold">Descrição</TableHead>
