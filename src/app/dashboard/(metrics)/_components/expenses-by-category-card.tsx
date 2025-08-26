@@ -1,4 +1,7 @@
-import { Wallet2Icon } from 'lucide-react'
+'use client'
+
+import { DollarSignIcon } from 'lucide-react'
+import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
 import {
 	Card,
 	CardContent,
@@ -6,6 +9,12 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card'
+import {
+	type ChartConfig,
+	ChartContainer,
+	ChartTooltip,
+	ChartTooltipContent,
+} from '@/components/ui/chart'
 import { type CategoryId, categories } from '@/constants/categories'
 import { formatPrice } from '@/helpers/format-price'
 import type { Transaction } from '@/types/transaction'
@@ -20,6 +29,12 @@ type ExpensesByCategory = {
 	totalInCents: number
 	count: number
 }
+
+const chartConfig = {
+	amount: {
+		label: 'Valor',
+	},
+} satisfies ChartConfig
 
 export function ExpensesByCategoryCard({
 	transactions,
@@ -47,9 +62,10 @@ export function ExpensesByCategoryCard({
 			{} as Record<CategoryId, ExpensesByCategory>,
 		)
 
-	const sortedExpenses = Object.values(expensesByCategory).sort(
-		(a, b) => b.totalInCents - a.totalInCents,
-	)
+	const chartData = Object.values(expensesByCategory).map((item) => ({
+		category: item.categoryName,
+		amount: item.totalInCents / 100,
+	}))
 
 	return (
 		<Card>
@@ -60,45 +76,39 @@ export function ExpensesByCategoryCard({
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
-				{sortedExpenses.length > 0 ? (
-					<div className="space-y-4">
-						{sortedExpenses.map((expense) => {
-							const { icon: Icon } = categories[expense.categoryId]
-
-							return (
-								<div
-									key={expense.categoryId}
-									className="flex items-center justify-between"
-								>
-									<div className="flex items-center gap-3">
-										<div className="flex size-10 items-center justify-center rounded-lg bg-muted">
-											<Icon className="size-5" />
-										</div>
-										<div>
-											<p className="font-medium">{expense.categoryName}</p>
-											<p className="text-sm text-muted-foreground">
-												{expense.count}{' '}
-												{expense.count === 1 ? 'transação' : 'transações'}
-											</p>
-										</div>
-									</div>
-									<div className="text-right">
-										<p className="font-medium">
-											{formatPrice(expense.totalInCents / 100)}
-										</p>
-									</div>
-								</div>
-							)
-						})}
-					</div>
-				) : (
-					<div className="h-40 flex flex-col items-center justify-center gap-2 border-dashed border-2 border-gray-300 rounded-lg">
-						<Wallet2Icon className="size-8 text-muted-foreground" />
-						<p className="text-center text-muted-foreground">
-							Nenhuma despesa encontrada.
-						</p>
-					</div>
-				)}
+				<ChartContainer config={chartConfig}>
+					<BarChart accessibilityLayer data={chartData}>
+						<CartesianGrid vertical={false} />
+						<XAxis
+							dataKey="category"
+							tickLine={false}
+							tickMargin={10}
+							axisLine={false}
+						/>
+						<ChartTooltip
+							cursor={false}
+							content={
+								<ChartTooltipContent
+									hideLabel
+									formatter={(value) => (
+										<>
+											Total:{' '}
+											<strong className="font-semibold">
+												{formatPrice(Number(value))}
+											</strong>
+										</>
+									)}
+								/>
+							}
+						/>
+						<Bar
+							dataKey="amount"
+							fill="var(--chart-2)"
+							radius={8}
+							barSize={65}
+						/>
+					</BarChart>
+				</ChartContainer>
 			</CardContent>
 		</Card>
 	)
