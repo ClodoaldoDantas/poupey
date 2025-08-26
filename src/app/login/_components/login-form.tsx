@@ -1,12 +1,14 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LoaderIcon, WalletIcon } from 'lucide-react'
+import { LoaderIcon } from 'lucide-react'
+import Image from 'next/image'
 import { useAction } from 'next-safe-action/hooks'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { login } from '@/actions/login'
+import logoImg from '@/assets/logo.svg'
 import { Button } from '@/components/ui/button'
 import {
 	Card,
@@ -14,7 +16,6 @@ import {
 	CardDescription,
 	CardFooter,
 	CardHeader,
-	CardTitle,
 } from '@/components/ui/card'
 import {
 	Form,
@@ -64,12 +65,9 @@ export function LoginForm() {
 	return (
 		<Card className="w-full max-w-sm">
 			<CardHeader>
-				<CardTitle className="flex items-center gap-2 text-teal-700">
-					<WalletIcon className="size-5" />
-					Poupey
-				</CardTitle>
+				<Image src={logoImg} alt="Poupey" width={140} />
 
-				<CardDescription>
+				<CardDescription className="mt-1">
 					Entre na sua conta para acessar seus dados financeiros.
 				</CardDescription>
 			</CardHeader>

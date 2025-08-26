@@ -30,12 +30,10 @@ export function Summary({ transactions }: { transactions: Transaction[] }) {
 	const formattedBalance = formatPrice(summary.balance / 100)
 
 	return (
-		<div className="container mx-auto px-4 mt-[-80px]">
-			<div className="flex items-center gap-2 overflow-x-auto pb-5">
-				<SummaryCard type="income" value={formattedIncome} />
-				<SummaryCard type="expense" value={formattedExpense} />
-				<SummaryCard type="balance" value={formattedBalance} />
-			</div>
+		<div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+			<SummaryCard type="income" value={formattedIncome} />
+			<SummaryCard type="expense" value={formattedExpense} />
+			<SummaryCard type="balance" value={formattedBalance} />
 		</div>
 	)
 }

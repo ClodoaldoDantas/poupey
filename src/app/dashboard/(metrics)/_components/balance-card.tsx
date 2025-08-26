@@ -1,3 +1,4 @@
+import { InboxIcon } from 'lucide-react'
 import {
 	Card,
 	CardContent,
@@ -20,7 +21,18 @@ export function BalanceCard({ transactions }: BalanceCardProps) {
 					Veja a porcentagem do quanto você gastou e economizou no mês
 				</CardDescription>
 			</CardHeader>
-			<CardContent>{/* TODO: adicionar PieChart */}</CardContent>
+			<CardContent>
+				{transactions.length > 0 ? (
+					<p>Conteúdo do cartão de resumo do mês</p>
+				) : (
+					<div className="h-40 flex flex-col items-center justify-center gap-2 border-dashed border-2 border-gray-300 rounded-lg">
+						<InboxIcon className="size-8 text-muted-foreground" />
+						<p className="text-center text-muted-foreground">
+							Nenhuma transação encontrada.
+						</p>
+					</div>
+				)}
+			</CardContent>
 		</Card>
 	)
 }

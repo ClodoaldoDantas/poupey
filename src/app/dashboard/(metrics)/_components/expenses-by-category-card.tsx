@@ -1,3 +1,4 @@
+import { Wallet2Icon } from 'lucide-react'
 import {
 	Card,
 	CardContent,
@@ -91,9 +92,12 @@ export function ExpensesByCategoryCard({
 						})}
 					</div>
 				) : (
-					<p className="text-center text-muted-foreground">
-						Nenhuma despesa encontrada no período selecionado.
-					</p>
+					<div className="h-40 flex flex-col items-center justify-center gap-2 border-dashed border-2 border-gray-300 rounded-lg">
+						<Wallet2Icon className="size-8 text-muted-foreground" />
+						<p className="text-center text-muted-foreground">
+							Nenhuma despesa encontrada.
+						</p>
+					</div>
 				)}
 			</CardContent>
 		</Card>

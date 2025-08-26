@@ -37,8 +37,8 @@ export function MonthYearPicker() {
 	return (
 		<Popover>
 			<PopoverTrigger asChild>
-				<Button variant="ghost" className="text-white">
-					<span className="text-lg">{selectedDateFormatted}</span>
+				<Button variant="ghost">
+					<span>{selectedDateFormatted}</span>
 					<ChevronDownIcon className="size-5" />
 				</Button>
 			</PopoverTrigger>

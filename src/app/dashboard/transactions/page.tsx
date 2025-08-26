@@ -1,10 +1,7 @@
-import { ArrowLeftIcon, InboxIcon } from 'lucide-react'
+import { InboxIcon } from 'lucide-react'
 import type { SearchParams } from 'nuqs/server'
 import { getTransactions } from '@/actions/get-transactions'
-import { PreserveQueryLink } from '@/components/preserve-query-link'
-import { Button } from '@/components/ui/button'
 import { loadSearchParams } from '@/helpers/load-search-params'
-import { Header } from '../_components/header'
 import { AddTransaction } from './_components/add-transaction'
 import { ExportExcelButton } from './_components/export-excel-button'
 import { TransactionsTable } from './_components/transactions-table'
@@ -21,39 +18,26 @@ export default async function DashboardTransactionsPage({
 
 	return (
 		<>
-			<Header />
+			<div className="flex items-center justify-between">
+				<div className="flex items-center gap-2 justify-end">
+					<AddTransaction.Dialog>
+						<AddTransaction.Form />
+					</AddTransaction.Dialog>
 
-			<div className="container mx-auto mt-6 px-4">
-				<div className="flex items-center justify-between">
-					<Button variant="outline" asChild>
-						<PreserveQueryLink href="/dashboard">
-							<ArrowLeftIcon />
-							Voltar para o Dashboard
-						</PreserveQueryLink>
-					</Button>
-
-					<div className="flex items-center gap-2 justify-end">
-						<AddTransaction.Dialog>
-							<AddTransaction.Form />
-						</AddTransaction.Dialog>
-
-						<ExportExcelButton
-							transactions={transactions}
-							month={month}
-							year={year}
-						/>
-					</div>
+					<ExportExcelButton
+						transactions={transactions}
+						month={month}
+						year={year}
+					/>
 				</div>
 			</div>
 
 			{transactions.length === 0 ? (
-				<div className="container mx-auto my-8 md:my-12 px-4">
-					<div className="h-40 flex flex-col items-center justify-center gap-2 border-dashed border-2 border-gray-300 rounded-lg">
-						<InboxIcon className="size-8 text-muted-foreground" />
-						<p className="text-lg text-center text-muted-foreground">
-							Nenhuma transação encontrada.
-						</p>
-					</div>
+				<div className="my-8 h-40 flex flex-col items-center justify-center gap-2 border-dashed border-2 border-gray-300 rounded-lg">
+					<InboxIcon className="size-8 text-muted-foreground" />
+					<p className="text-lg text-center text-muted-foreground">
+						Nenhuma transação encontrada.
+					</p>
 				</div>
 			) : (
 				<TransactionsTable transactions={transactions} />

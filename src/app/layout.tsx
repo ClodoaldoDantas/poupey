@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${sora.variable} antialiased bg-zinc-50 font-sans`}>
+			<body className={`${sora.variable} antialiased font-sans`}>
 				<NuqsAdapter>{children}</NuqsAdapter>
 				<Toaster richColors position="bottom-center" />
 			</body>

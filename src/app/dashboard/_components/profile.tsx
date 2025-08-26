@@ -1,14 +1,11 @@
-import { PiggyBankIcon } from 'lucide-react'
 import { getProfile } from '@/actions/get-profile'
-import { PreserveQueryLink } from '@/components/preserve-query-link'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
 import {
 	DropdownMenu,
 	DropdownMenuContent,
-	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { SidebarMenuButton } from '@/components/ui/sidebar'
 import { LogoutButton } from './logout-button'
 
 export async function Profile() {
@@ -17,10 +14,7 @@ export async function Profile() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button
-					variant="ghost"
-					className="flex items-center gap-4 hover:bg-transparent px-2"
-				>
+				<SidebarMenuButton size="lg">
 					<Avatar className="size-10">
 						<AvatarImage src={profile?.imageUrl ?? ''} />
 						<AvatarFallback>
@@ -28,19 +22,13 @@ export async function Profile() {
 						</AvatarFallback>
 					</Avatar>
 
-					<span className="text-white text-base font-semibold hidden sm:block">
-						{profile.name}
-					</span>
-				</Button>
+					<div className="flex flex-col">
+						<strong className="text-sm font-medium">{profile.name}</strong>
+						<span className="text-sm text-muted-foreground">Administrador</span>
+					</div>
+				</SidebarMenuButton>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className="w-56" align="start">
-				<DropdownMenuItem asChild>
-					<PreserveQueryLink href="/dashboard/transactions">
-						<PiggyBankIcon className="size-5 text-foreground" />
-						Minhas Transações
-					</PreserveQueryLink>
-				</DropdownMenuItem>
-
+			<DropdownMenuContent align="start" className="w-56">
 				<LogoutButton />
 			</DropdownMenuContent>
 		</DropdownMenu>
