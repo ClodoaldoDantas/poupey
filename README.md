@@ -1,6 +1,6 @@
 # 💰 Poupey
 
-<img width="1865" height="963" alt="image" src="https://github.com/user-attachments/assets/04eb73b4-3898-4567-aac8-2790ee895767" />
+<img width="1920" height="963" alt="image" src="https://github.com/user-attachments/assets/3f588f3d-d359-4fb4-a4ee-6debc591c74d" />
 
 Um sistema de controle financeiro pessoal moderno e intuitivo, desenvolvido com Next.js 15 e tecnologias de ponta.
 
