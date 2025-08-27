@@ -1,4 +1,4 @@
-import { CoinsIcon, TrendingDownIcon, TrendingUpIcon } from 'lucide-react'
+import { ScaleIcon, TrendingDownIcon, TrendingUpIcon } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 
 type SummaryCardProps = {
@@ -13,23 +13,25 @@ const labels = {
 }
 
 const icons = {
-	income: <TrendingUpIcon className="size-6 text-green-500" />,
-	expense: <TrendingDownIcon className="size-6 text-red-500" />,
-	balance: <CoinsIcon className="size-6 text-zinc-500" />,
+	income: <TrendingUpIcon className="size-8 text-green-500" />,
+	expense: <TrendingDownIcon className="size-8 text-red-500" />,
+	balance: <ScaleIcon className="size-8 text-zinc-500" />,
 }
 
 export function SummaryCard({ type, value }: SummaryCardProps) {
 	return (
 		<Card>
-			<CardContent className="flex flex-col gap-4">
-				<div className="flex items-center justify-between">
-					<span className="block text-zinc-600">{labels[type]}</span>
+			<CardContent className="flex items-center gap-4">
+				<div className="size-16 rounded-md bg-muted flex items-center justify-center">
 					{icons[type]}
 				</div>
 
-				<strong className="text-2xl lg:text-3xl text-zinc-800 font-semibold">
-					{value}
-				</strong>
+				<div className="flex flex-col gap-0.5">
+					<span className="text-zinc-600">{labels[type]}</span>
+					<strong className="text-xl text-zinc-800 font-semibold">
+						{value}
+					</strong>
+				</div>
 			</CardContent>
 		</Card>
 	)
