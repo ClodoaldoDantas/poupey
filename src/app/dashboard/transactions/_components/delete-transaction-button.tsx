@@ -2,14 +2,16 @@
 
 import { Trash2Icon } from 'lucide-react'
 import { toast } from 'sonner'
+import { deleteTransaction } from '@/actions/delete-transaction'
 import { Button } from '@/components/ui/button'
-import { deleteTransaction } from '../_actions/delete-transaction'
+
+type DeleteTransactionButtonProps = {
+	transactionId: string
+}
 
 export function DeleteTransactionButton({
 	transactionId,
-}: {
-	transactionId: string
-}) {
+}: DeleteTransactionButtonProps) {
 	const handleDeleteTransaction = async () => {
 		if (window.confirm('Tem certeza que deseja excluir esta transação?')) {
 			try {

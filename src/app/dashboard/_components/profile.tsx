@@ -1,14 +1,12 @@
+import { getProfile } from '@/actions/get-profile'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
 import {
 	DropdownMenu,
 	DropdownMenuContent,
-	DropdownMenuGroup,
-	DropdownMenuLabel,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { SignOutButton } from '../../(auth)/_components/sign-out-button'
-import { getProfile } from '../_actions/get-profile'
+import { SidebarMenuButton } from '@/components/ui/sidebar'
+import { LogoutButton } from './logout-button'
 
 export async function Profile() {
 	const profile = await getProfile()
@@ -16,10 +14,7 @@ export async function Profile() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button
-					variant="ghost"
-					className="flex items-center gap-4 hover:bg-transparent px-2"
-				>
+				<SidebarMenuButton size="lg" className="w-fit">
 					<Avatar className="size-10">
 						<AvatarImage src={profile?.imageUrl ?? ''} />
 						<AvatarFallback>
@@ -27,16 +22,14 @@ export async function Profile() {
 						</AvatarFallback>
 					</Avatar>
 
-					<span className="text-white text-base font-semibold hidden sm:block">
-						{profile.name}
-					</span>
-				</Button>
+					<div className="flex flex-col">
+						<strong className="text-sm font-medium">{profile.name}</strong>
+						<span className="text-xs text-muted-foreground">Administrador</span>
+					</div>
+				</SidebarMenuButton>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className="w-56" align="start">
-				<DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
-				<DropdownMenuGroup>
-					<SignOutButton />
-				</DropdownMenuGroup>
+			<DropdownMenuContent align="start" className="w-56">
+				<LogoutButton />
 			</DropdownMenuContent>
 		</DropdownMenu>
 	)

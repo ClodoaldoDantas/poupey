@@ -1,11 +1,14 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LoaderIcon, WalletIcon } from 'lucide-react'
+import { LoaderIcon } from 'lucide-react'
+import Image from 'next/image'
 import { useAction } from 'next-safe-action/hooks'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
+import { login } from '@/actions/login'
+import logoImg from '@/assets/logo.svg'
 import { Button } from '@/components/ui/button'
 import {
 	Card,
@@ -13,7 +16,6 @@ import {
 	CardDescription,
 	CardFooter,
 	CardHeader,
-	CardTitle,
 } from '@/components/ui/card'
 import {
 	Form,
@@ -24,7 +26,6 @@ import {
 	FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { login } from '../_actions/login'
 
 const formSchema = z.object({
 	username: z
@@ -37,7 +38,7 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>
 
-export function SignInForm() {
+export function LoginForm() {
 	const form = useForm<FormData>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -54,7 +55,7 @@ export function SignInForm() {
 		},
 	})
 
-	function handleSignIn(values: FormData) {
+	function handleLogin(values: FormData) {
 		loginAction.execute({
 			username: values.username,
 			password: values.password,
@@ -64,18 +65,15 @@ export function SignInForm() {
 	return (
 		<Card className="w-full max-w-sm">
 			<CardHeader>
-				<CardTitle className="flex items-center gap-2 text-teal-700">
-					<WalletIcon className="size-5" />
-					Poupey
-				</CardTitle>
+				<Image src={logoImg} alt="Poupey" width={140} />
 
-				<CardDescription>
+				<CardDescription className="mt-1">
 					Entre na sua conta para acessar seus dados financeiros.
 				</CardDescription>
 			</CardHeader>
 
 			<Form {...form}>
-				<form onSubmit={form.handleSubmit(handleSignIn)}>
+				<form onSubmit={form.handleSubmit(handleLogin)}>
 					<CardContent className="space-y-4">
 						<FormField
 							control={form.control}

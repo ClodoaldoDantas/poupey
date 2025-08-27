@@ -1,18 +1,22 @@
 # 💰 Poupey
 
-<img width="1865" height="963" alt="image" src="https://github.com/user-attachments/assets/04eb73b4-3898-4567-aac8-2790ee895767" />
+<img width="1920" height="963" alt="image" src="https://github.com/user-attachments/assets/3f588f3d-d359-4fb4-a4ee-6debc591c74d" />
 
 Um sistema de controle financeiro pessoal moderno e intuitivo, desenvolvido com Next.js 15 e tecnologias de ponta.
 
 ## ✨ Funcionalidades
 
-- **� Sistema de Autenticação**: Login seguro com sessões JWT e proteção de rotas
+- **🔐 Sistema de Autenticação**: Login seguro com sessões JWT e proteção de rotas
 - **👤 Perfil do Usuário**: Gestão personalizada de dados financeiros por usuário
-- **📈 Dashboard Financeiro**: Visualização completa das suas finanças com resumos mensais
+- **� Dashboard Avançado**: Visualização completa das suas finanças com múltiplas métricas
 - **💸 Gestão de Transações**: Adicione, edite e delete receitas e despesas
 - **🏷️ Categorização**: Organize suas transações por categorias (Alimentação, Saúde, Educação, Casa, Lazer, etc.)
 - **📅 Filtros Avançados**: Filtre transações por mês e ano
-- **📈 Resumo Financeiro**: Cards com total de receitas, despesas e saldo
+- **📈 Gráficos Interativos**: 
+  - **Gráfico de Barras Horizontais**: Compare receitas vs despesas visualmente
+  - **Resumo Visual**: Valores formatados em real brasileiro com cores diferenciadas
+- **📋 Últimas Transações**: Visualize suas 5 transações mais recentes com ícones de categoria
+- **📊 Cards de Resumo**: Métricas financeiras organizadas em cards informativos
 - **📤 Exportação Excel**: Exporte seus dados financeiros para planilhas
 - **🔒 Proteção de Dados**: Cada usuário acessa apenas suas próprias transações
 
@@ -25,6 +29,8 @@ Um sistema de controle financeiro pessoal moderno e intuitivo, desenvolvido com 
 - **[Tailwind CSS](https://tailwindcss.com/)** - Framework CSS utilitário
 - **[Radix UI](https://www.radix-ui.com/)** - Componentes primitivos acessíveis
 - **[Lucide React](https://lucide.dev/)** - Ícones SVG modernos
+- **[Recharts](https://recharts.org/)** - Biblioteca de gráficos React
+- **[shadcn/ui Charts](https://ui.shadcn.com/charts)** - Componentes de gráfico personalizados
 
 ### Backend & Banco de Dados
 - **[Drizzle ORM](https://orm.drizzle.team/)** - ORM TypeScript-first

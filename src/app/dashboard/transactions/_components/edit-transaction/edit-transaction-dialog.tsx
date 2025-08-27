@@ -1,7 +1,7 @@
 'use client'
 
 import { EditIcon } from 'lucide-react'
-import { useState } from 'react'
+import { type ReactNode, useContext } from 'react'
 import { Button } from '@/components/ui/button'
 import {
 	Dialog,
@@ -11,18 +11,15 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/components/ui/dialog'
-import type { Transaction } from '@/types/transaction'
-import { EditTransactionForm } from './edit-transaction-form'
+import { EditTransactionContext } from './edit-transaction-root'
 
-export function EditTransactionDialog({
-	transaction,
-}: {
-	transaction: Transaction
-}) {
-	const [isOpen, setIsOpen] = useState(false)
+export function EditTransactionDialog({ children }: { children: ReactNode }) {
+	const { isDialogOpen, handleOpenChangeDialog } = useContext(
+		EditTransactionContext,
+	)
 
 	return (
-		<Dialog open={isOpen} onOpenChange={setIsOpen}>
+		<Dialog open={isDialogOpen} onOpenChange={handleOpenChangeDialog}>
 			<DialogTrigger asChild>
 				<Button variant="outline">
 					<EditIcon className="size-5" />
@@ -37,10 +34,7 @@ export function EditTransactionDialog({
 					</DialogDescription>
 				</DialogHeader>
 
-				<EditTransactionForm
-					transaction={transaction}
-					onSuccess={() => setIsOpen(false)}
-				/>
+				{children}
 			</DialogContent>
 		</Dialog>
 	)

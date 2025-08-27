@@ -2,8 +2,6 @@
 
 import { ChevronDownIcon } from 'lucide-react'
 import { useQueryState } from 'nuqs'
-import { getLastFiveYears } from '@/app/dashboard/_helpers/get-last-five-years'
-import { monthYearSearchParams } from '@/app/dashboard/_helpers/load-search-params'
 import { Button } from '@/components/ui/button'
 import {
 	Popover,
@@ -17,7 +15,9 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
-import { months } from '../_constants/months'
+import { months } from '@/constants/months'
+import { getLastFiveYears } from '@/helpers/get-last-five-years'
+import { monthYearSearchParams } from '@/helpers/load-search-params'
 
 const lastFiveYears = getLastFiveYears()
 
@@ -37,8 +37,8 @@ export function MonthYearPicker() {
 	return (
 		<Popover>
 			<PopoverTrigger asChild>
-				<Button variant="ghost" className="text-white">
-					<span className="text-lg">{selectedDateFormatted}</span>
+				<Button variant="ghost">
+					<span>{selectedDateFormatted}</span>
 					<ChevronDownIcon className="size-5" />
 				</Button>
 			</PopoverTrigger>
@@ -46,7 +46,7 @@ export function MonthYearPicker() {
 				<Select
 					name="month"
 					value={selectedMonth.toString()}
-					onValueChange={(value) => setSelectedMonth(Number(value))}
+					onValueChange={(value: string) => setSelectedMonth(Number(value))}
 				>
 					<SelectTrigger className="w-full">
 						<SelectValue placeholder="Mês" />
@@ -63,7 +63,7 @@ export function MonthYearPicker() {
 				<Select
 					name="year"
 					value={selectedYear.toString()}
-					onValueChange={(value) => setSelectedYear(Number(value))}
+					onValueChange={(value: string) => setSelectedYear(Number(value))}
 				>
 					<SelectTrigger className="w-full">
 						<SelectValue placeholder="Ano" />

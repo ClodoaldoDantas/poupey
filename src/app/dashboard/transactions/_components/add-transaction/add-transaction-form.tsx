@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
 import { toast } from 'sonner'
 import { z } from 'zod'
-import { categories } from '@/app/dashboard/_constants/categories'
+import { createTransaction } from '@/actions/create-transaction'
 import { Button } from '@/components/ui/button'
 import {
 	Form,
@@ -26,7 +26,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
-import { createTransaction } from '../_actions/create-transaction'
+import { categories } from '@/constants/categories'
 
 const formSchema = z.object({
 	description: z.string().min(2, { message: 'Descrição é obrigatória.' }),
