@@ -46,7 +46,7 @@ export function MonthYearPicker() {
 				<Select
 					name="month"
 					value={selectedMonth.toString()}
-					onValueChange={(value) => setSelectedMonth(Number(value))}
+					onValueChange={(value: string) => setSelectedMonth(Number(value))}
 				>
 					<SelectTrigger className="w-full">
 						<SelectValue placeholder="Mês" />
@@ -63,7 +63,7 @@ export function MonthYearPicker() {
 				<Select
 					name="year"
 					value={selectedYear.toString()}
-					onValueChange={(value) => setSelectedYear(Number(value))}
+					onValueChange={(value: string) => setSelectedYear(Number(value))}
 				>
 					<SelectTrigger className="w-full">
 						<SelectValue placeholder="Ano" />
