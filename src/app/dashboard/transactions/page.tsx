@@ -1,6 +1,6 @@
-import { InboxIcon } from 'lucide-react'
 import type { SearchParams } from 'nuqs/server'
 import { getTransactions } from '@/actions/get-transactions'
+import { EmptyData } from '@/components/empty-data'
 import {
 	Card,
 	CardAction,
@@ -26,12 +26,7 @@ export default async function DashboardTransactionsPage({
 	return (
 		<>
 			{transactions.length === 0 ? (
-				<div className="my-8 h-40 flex flex-col items-center justify-center gap-2 border-dashed border-2 border-gray-300 rounded-lg">
-					<InboxIcon className="size-8 text-muted-foreground" />
-					<p className="text-lg text-center text-muted-foreground">
-						Nenhuma transação encontrada.
-					</p>
-				</div>
+				<EmptyData />
 			) : (
 				<Card>
 					<CardHeader>

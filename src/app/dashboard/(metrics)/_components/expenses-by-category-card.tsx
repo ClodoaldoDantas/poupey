@@ -1,7 +1,7 @@
 'use client'
 
-import { DollarSignIcon } from 'lucide-react'
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
+import { EmptyData } from '@/components/empty-data'
 import {
 	Card,
 	CardContent,
@@ -76,39 +76,45 @@ export function ExpensesByCategoryCard({
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<ChartContainer config={chartConfig}>
-					<BarChart accessibilityLayer data={chartData}>
-						<CartesianGrid vertical={false} />
-						<XAxis
-							dataKey="category"
-							tickLine={false}
-							tickMargin={10}
-							axisLine={false}
-						/>
-						<ChartTooltip
-							cursor={false}
-							content={
-								<ChartTooltipContent
-									hideLabel
-									formatter={(value) => (
-										<>
-											Total:{' '}
-											<strong className="font-semibold">
-												{formatPrice(Number(value))}
-											</strong>
-										</>
-									)}
-								/>
-							}
-						/>
-						<Bar
-							dataKey="amount"
-							fill="var(--chart-2)"
-							radius={8}
-							barSize={65}
-						/>
-					</BarChart>
-				</ChartContainer>
+				{transactions.length > 0 ? (
+					<ChartContainer config={chartConfig} className="h-[300px] w-full">
+						<BarChart accessibilityLayer data={chartData}>
+							<CartesianGrid vertical={false} />
+							<XAxis
+								dataKey="category"
+								tickLine={false}
+								tickMargin={10}
+								axisLine={false}
+								fontSize={12}
+								fontWeight={500}
+							/>
+							<ChartTooltip
+								cursor={false}
+								content={
+									<ChartTooltipContent
+										hideLabel
+										formatter={(value) => (
+											<>
+												Total:{' '}
+												<strong className="font-semibold">
+													{formatPrice(Number(value))}
+												</strong>
+											</>
+										)}
+									/>
+								}
+							/>
+							<Bar
+								dataKey="amount"
+								fill="var(--chart-1)"
+								radius={4}
+								barSize={50}
+							/>
+						</BarChart>
+					</ChartContainer>
+				) : (
+					<EmptyData />
+				)}
 			</CardContent>
 		</Card>
 	)

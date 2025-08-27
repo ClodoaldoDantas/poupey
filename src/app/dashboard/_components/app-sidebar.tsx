@@ -1,13 +1,11 @@
 import { DollarSignIcon, HomeIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Profile } from '@/app/dashboard/_components/profile'
 import logoImg from '@/assets/logo.svg'
 import { PreserveQueryLink } from '@/components/preserve-query-link'
 import {
 	Sidebar,
 	SidebarContent,
-	SidebarFooter,
 	SidebarGroup,
 	SidebarGroupContent,
 	SidebarGroupLabel,
@@ -57,9 +55,6 @@ export function AppSidebar() {
 					</SidebarGroupContent>
 				</SidebarGroup>
 			</SidebarContent>
-			<SidebarFooter>
-				<Profile />
-			</SidebarFooter>
 		</Sidebar>
 	)
 }

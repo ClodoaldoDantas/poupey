@@ -14,7 +14,7 @@ export async function Profile() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<SidebarMenuButton size="lg">
+				<SidebarMenuButton size="lg" className="w-fit">
 					<Avatar className="size-10">
 						<AvatarImage src={profile?.imageUrl ?? ''} />
 						<AvatarFallback>
@@ -24,7 +24,7 @@ export async function Profile() {
 
 					<div className="flex flex-col">
 						<strong className="text-sm font-medium">{profile.name}</strong>
-						<span className="text-sm text-muted-foreground">Administrador</span>
+						<span className="text-xs text-muted-foreground">Administrador</span>
 					</div>
 				</SidebarMenuButton>
 			</DropdownMenuTrigger>

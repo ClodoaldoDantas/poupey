@@ -3,6 +3,8 @@ import { getTransactions } from '@/actions/get-transactions'
 
 import { loadSearchParams } from '@/helpers/load-search-params'
 import { ExpensesByCategoryCard } from './_components/expenses-by-category-card'
+import { LatestTransactionsCard } from './_components/latest-transactions-card'
+import { MonthlyBalanceCard } from './_components/monthly-balance-card'
 import { Summary } from './_components/summary'
 
 type HomeProps = {
@@ -17,8 +19,10 @@ export default async function Home({ searchParams }: HomeProps) {
 		<>
 			<Summary transactions={transactions} />
 
-			<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+			<div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+				<MonthlyBalanceCard transactions={transactions} />
 				<ExpensesByCategoryCard transactions={transactions} />
+				<LatestTransactionsCard transactions={transactions} />
 			</div>
 		</>
 	)
