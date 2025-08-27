@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
 import { AppSidebar } from './_components/app-sidebar'
 import { MonthYearPicker } from './_components/month-year-picker'
@@ -21,7 +22,9 @@ export default function DashboardLayout({
 					</div>
 				</header>
 
-				<div className="p-6">{children}</div>
+				<Suspense>
+					<div className="p-6">{children}</div>
+				</Suspense>
 			</main>
 		</SidebarProvider>
 	)

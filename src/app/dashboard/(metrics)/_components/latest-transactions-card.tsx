@@ -1,6 +1,5 @@
 import dayjs from 'dayjs'
 import { EyeIcon } from 'lucide-react'
-import { Suspense } from 'react'
 import { EmptyData } from '@/components/empty-data'
 import { PreserveQueryLink } from '@/components/preserve-query-link'
 import { Button } from '@/components/ui/button'
@@ -34,14 +33,12 @@ export function LatestTransactionsCard({
 
 				{latestTransactions.length > 0 && (
 					<CardAction>
-						<Suspense>
-							<Button variant="outline" asChild>
-								<PreserveQueryLink href="/dashboard/transactions">
-									<EyeIcon />
-									Ver todos
-								</PreserveQueryLink>
-							</Button>
-						</Suspense>
+						<Button variant="outline" asChild>
+							<PreserveQueryLink href="/dashboard/transactions">
+								<EyeIcon />
+								Ver todos
+							</PreserveQueryLink>
+						</Button>
 					</CardAction>
 				)}
 			</CardHeader>

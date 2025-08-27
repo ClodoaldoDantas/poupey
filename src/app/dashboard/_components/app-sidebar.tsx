@@ -1,7 +1,6 @@
 import { DollarSignIcon, HomeIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Suspense } from 'react'
 import logoImg from '@/assets/logo.svg'
 import { PreserveQueryLink } from '@/components/preserve-query-link'
 import {
@@ -44,14 +43,12 @@ export function AppSidebar() {
 						<SidebarMenu>
 							{items.map((item) => (
 								<SidebarMenuItem key={item.title}>
-									<Suspense>
-										<SidebarMenuButton asChild>
-											<PreserveQueryLink href={item.url}>
-												<item.icon />
-												<span>{item.title}</span>
-											</PreserveQueryLink>
-										</SidebarMenuButton>
-									</Suspense>
+									<SidebarMenuButton asChild>
+										<PreserveQueryLink href={item.url}>
+											<item.icon />
+											<span>{item.title}</span>
+										</PreserveQueryLink>
+									</SidebarMenuButton>
 								</SidebarMenuItem>
 							))}
 						</SidebarMenu>
