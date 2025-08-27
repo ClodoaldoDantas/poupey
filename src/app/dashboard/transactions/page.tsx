@@ -24,31 +24,29 @@ export default async function DashboardTransactionsPage({
 	const transactions = await getTransactions({ month, year })
 
 	return (
-		<>
-			{transactions.length === 0 ? (
-				<EmptyData />
-			) : (
-				<Card>
-					<CardHeader>
-						<CardTitle>Transações</CardTitle>
+		<Card>
+			<CardHeader>
+				<CardTitle>Transações</CardTitle>
 
-						<CardAction className="space-x-2">
-							<AddTransaction.Dialog>
-								<AddTransaction.Form />
-							</AddTransaction.Dialog>
+				<CardAction className="space-x-2">
+					<AddTransaction.Dialog>
+						<AddTransaction.Form />
+					</AddTransaction.Dialog>
 
-							<ExportExcelButton
-								transactions={transactions}
-								month={month}
-								year={year}
-							/>
-						</CardAction>
-					</CardHeader>
-					<CardContent>
-						<TransactionsTable transactions={transactions} />
-					</CardContent>
-				</Card>
-			)}
-		</>
+					<ExportExcelButton
+						transactions={transactions}
+						month={month}
+						year={year}
+					/>
+				</CardAction>
+			</CardHeader>
+			<CardContent>
+				{transactions.length === 0 ? (
+					<EmptyData />
+				) : (
+					<TransactionsTable transactions={transactions} />
+				)}
+			</CardContent>
+		</Card>
 	)
 }
