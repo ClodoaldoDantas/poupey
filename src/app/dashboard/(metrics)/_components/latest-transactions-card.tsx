@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import { EyeIcon } from 'lucide-react'
+import Link from 'next/link'
 import { EmptyData } from '@/components/empty-data'
-import { PreserveQueryLink } from '@/components/preserve-query-link'
 import { Button } from '@/components/ui/button'
 import {
 	Card,
@@ -34,10 +34,10 @@ export function LatestTransactionsCard({
 				{latestTransactions.length > 0 && (
 					<CardAction>
 						<Button variant="outline" asChild>
-							<PreserveQueryLink href="/dashboard/transactions">
+							<Link href="/dashboard/transactions">
 								<EyeIcon />
 								Ver todos
-							</PreserveQueryLink>
+							</Link>
 						</Button>
 					</CardAction>
 				)}
