@@ -26,7 +26,7 @@ export function LatestTransactionsCard({
 	const latestTransactions = transactions.slice(0, 4)
 
 	return (
-		<Card className="flex flex-col">
+		<Card className="flex flex-col xl:col-span-2 2xl:col-span-1">
 			<CardHeader className="items-center pb-0">
 				<CardTitle>Últimas Transações</CardTitle>
 				<CardDescription>Veja suas transações mais recentes</CardDescription>
@@ -77,7 +77,7 @@ export function LatestTransactionsCard({
 
 									<span
 										className={cn(
-											'font-medium',
+											'font-medium hidden sm:block',
 											isIncome ? 'text-green-600' : 'text-red-600',
 										)}
 									>

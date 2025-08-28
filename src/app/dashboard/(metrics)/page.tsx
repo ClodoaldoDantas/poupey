@@ -19,7 +19,7 @@ export default async function Home({ searchParams }: HomeProps) {
 		<>
 			<Summary transactions={transactions} />
 
-			<div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+			<div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
 				<MonthlyBalanceCard transactions={transactions} />
 				<ExpensesByCategoryCard transactions={transactions} />
 				<LatestTransactionsCard transactions={transactions} />

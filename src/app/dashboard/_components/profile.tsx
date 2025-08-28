@@ -22,7 +22,7 @@ export async function Profile() {
 						</AvatarFallback>
 					</Avatar>
 
-					<div className="flex flex-col">
+					<div className="hidden sm:flex flex-col">
 						<strong className="text-sm font-medium">{profile.name}</strong>
 						<span className="text-xs text-muted-foreground">Administrador</span>
 					</div>

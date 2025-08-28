@@ -30,7 +30,7 @@ export function Summary({ transactions }: { transactions: Transaction[] }) {
 	const formattedBalance = formatPrice(summary.balance / 100)
 
 	return (
-		<div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+		<div className="grid grid-cols-1 xl:grid-cols-3 gap-4 mb-4">
 			<SummaryCard type="income" value={formattedIncome} />
 			<SummaryCard type="expense" value={formattedExpense} />
 			<SummaryCard type="balance" value={formattedBalance} />
