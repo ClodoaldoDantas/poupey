@@ -11,6 +11,7 @@ import {
 import { loadSearchParams } from '@/helpers/load-search-params'
 import { AddTransaction } from './_components/add-transaction'
 import { ExportExcelButton } from './_components/export-excel-button'
+import { TransactionsList } from './_components/transactions-list'
 import { TransactionsTable } from './_components/transactions-table'
 
 type HomeProps = {
@@ -25,7 +26,7 @@ export default async function DashboardTransactionsPage({
 
 	return (
 		<Card>
-			<CardHeader>
+			<CardHeader className="flex flex-wrap gap-4 items-center justify-between">
 				<CardTitle>Transações</CardTitle>
 
 				<CardAction className="space-x-2">
@@ -44,7 +45,15 @@ export default async function DashboardTransactionsPage({
 				{transactions.length === 0 ? (
 					<EmptyData />
 				) : (
-					<TransactionsTable transactions={transactions} />
+					<>
+						<div className="xl:hidden">
+							<TransactionsList transactions={transactions} />
+						</div>
+
+						<div className="hidden xl:block">
+							<TransactionsTable transactions={transactions} />
+						</div>
+					</>
 				)}
 			</CardContent>
 		</Card>

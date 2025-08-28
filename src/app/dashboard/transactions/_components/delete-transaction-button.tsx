@@ -25,13 +25,13 @@ export function DeleteTransactionButton({
 
 	return (
 		<Button
-			size="sm"
+			size="icon"
 			variant="outline"
+			aria-label="Excluir"
 			className="hover:text-red-600 hover:border-red-600"
 			onClick={handleDeleteTransaction}
 		>
 			<Trash2Icon className="size-5" />
-			Excluir
 		</Button>
 	)
 }

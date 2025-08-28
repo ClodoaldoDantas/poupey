@@ -21,9 +21,8 @@ export function EditTransactionDialog({ children }: { children: ReactNode }) {
 	return (
 		<Dialog open={isDialogOpen} onOpenChange={handleOpenChangeDialog}>
 			<DialogTrigger asChild>
-				<Button variant="outline">
+				<Button size="icon" variant="outline" aria-label="Editar">
 					<EditIcon className="size-5" />
-					Editar
 				</Button>
 			</DialogTrigger>
 			<DialogContent>
