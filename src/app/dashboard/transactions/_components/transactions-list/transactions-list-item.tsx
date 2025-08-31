@@ -1,15 +1,21 @@
+'use client'
+
 import dayjs from 'dayjs'
+import { useState } from 'react'
 import { FormDialog } from '@/components/form-dialog'
 import { formatPrice } from '@/helpers/format-price'
 import type { Transaction } from '@/types/transaction'
 import { DeleteTransactionButton } from '../delete-transaction-button'
 import { EditTransactionForm } from '../edit-transaction-form'
 
+type TransactionsListItemProps = {
+	transaction: Transaction
+}
+
 export function TransactionsListItem({
 	transaction,
-}: {
-	transaction: Transaction
-}) {
+}: TransactionsListItemProps) {
+	const [isDialogOpen, setIsDialogOpen] = useState(false)
 	const amount = formatPrice(transaction.amountInCents / 100)
 
 	return (
@@ -42,8 +48,13 @@ export function TransactionsListItem({
 							title="Editar Transação"
 							description="Altere os dados da transação"
 							operation="edit"
+							open={isDialogOpen}
+							onOpenChange={setIsDialogOpen}
 						>
-							<EditTransactionForm transaction={transaction} />
+							<EditTransactionForm
+								transaction={transaction}
+								onSuccess={() => setIsDialogOpen(false)}
+							/>
 						</FormDialog>
 
 						<DeleteTransactionButton transactionId={transaction.id} />

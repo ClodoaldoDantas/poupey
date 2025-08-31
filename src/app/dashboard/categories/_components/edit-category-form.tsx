@@ -25,7 +25,15 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>
 
-export function EditCategoryForm({ category }: { category: Category }) {
+type EditCategoryFormProps = {
+	category: Category
+	onSuccess?: () => void
+}
+
+export function EditCategoryForm({
+	category,
+	onSuccess,
+}: EditCategoryFormProps) {
 	const form = useForm<FormData>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -36,6 +44,7 @@ export function EditCategoryForm({ category }: { category: Category }) {
 	const updateCategoryAction = useAction(updateCategory, {
 		onSuccess: () => {
 			toast.success('Categoria atualizada com sucesso.')
+			onSuccess?.()
 		},
 		onError: () => {
 			toast.error('Erro ao atualizar categoria.')

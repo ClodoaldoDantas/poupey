@@ -13,6 +13,8 @@ type FormDialogProps = {
 	title: string
 	description: string
 	operation: 'add' | 'edit'
+	open?: boolean
+	onOpenChange?: (open: boolean) => void
 	children: React.ReactNode
 }
 
@@ -21,9 +23,11 @@ export function FormDialog({
 	description,
 	operation,
 	children,
+	open,
+	onOpenChange,
 }: FormDialogProps) {
 	return (
-		<Dialog>
+		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogTrigger asChild>
 				{operation === 'add' ? (
 					<Button>Adicionar</Button>

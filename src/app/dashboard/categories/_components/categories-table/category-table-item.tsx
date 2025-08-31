@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import { FormDialog } from '@/components/form-dialog'
 import { TableCell, TableRow } from '@/components/ui/table'
 import type { Category } from '@/types/category'
@@ -9,6 +12,8 @@ type CategoriesTableItemProps = {
 }
 
 export function CategoryTableItem({ category }: CategoriesTableItemProps) {
+	const [isDialogOpen, setIsDialogOpen] = useState(false)
+
 	return (
 		<TableRow>
 			<TableCell>{category.name}</TableCell>
@@ -17,8 +22,13 @@ export function CategoryTableItem({ category }: CategoriesTableItemProps) {
 					title="Editar Categoria"
 					description="Altere os dados da categoria"
 					operation="edit"
+					open={isDialogOpen}
+					onOpenChange={setIsDialogOpen}
 				>
-					<EditCategoryForm category={category} />
+					<EditCategoryForm
+						category={category}
+						onSuccess={() => setIsDialogOpen(false)}
+					/>
 				</FormDialog>
 
 				<DeleteCategoryButton categoryId={category.id} />

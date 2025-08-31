@@ -41,11 +41,15 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>
 
+type EditTransactionFormProps = {
+	transaction: Transaction
+	onSuccess?: () => void
+}
+
 export function EditTransactionForm({
 	transaction,
-}: {
-	transaction: Transaction
-}) {
+	onSuccess,
+}: EditTransactionFormProps) {
 	const { data: categories, isLoading: isLoadingCategories } = useCategories()
 
 	const form = useForm<FormData>({
@@ -62,6 +66,7 @@ export function EditTransactionForm({
 	const updateTransactionAction = useAction(updateTransaction, {
 		onSuccess: () => {
 			toast.success('Transação atualizada com sucesso.')
+			onSuccess?.()
 		},
 		onError: () => {
 			toast.error('Erro ao atualizar transação.')
