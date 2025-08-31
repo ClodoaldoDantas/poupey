@@ -3,7 +3,6 @@
 import dayjs from 'dayjs'
 import { DownloadIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { categories } from '@/constants/categories'
 import { months } from '@/constants/months'
 import { downloadExcelFile, generateExcelFile } from '@/helpers/excel'
 import { formatPrice } from '@/helpers/format-price'
@@ -24,7 +23,7 @@ export function ExportExcelButton({
 		const data = transactions.map((transaction) => ({
 			Motivo: transaction.description,
 			Valor: formatPrice(transaction.amountInCents / 100),
-			Categoria: categories[transaction.category].name,
+			Categoria: transaction.category?.name ?? 'Sem categoria',
 			Data: dayjs(transaction.paymentDate).format('DD/MM/YYYY'),
 			Tipo: transaction.type === 'expense' ? 'Despesa' : 'Receita',
 		}))

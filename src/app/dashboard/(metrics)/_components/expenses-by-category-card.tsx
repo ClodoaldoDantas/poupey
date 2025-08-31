@@ -15,7 +15,6 @@ import {
 	ChartTooltip,
 	ChartTooltipContent,
 } from '@/components/ui/chart'
-import { type CategoryId, categories } from '@/constants/categories'
 import { formatPrice } from '@/helpers/format-price'
 import type { Transaction } from '@/types/transaction'
 
