@@ -1,5 +1,4 @@
 import dayjs from 'dayjs'
-import { categories } from '@/constants/categories'
 import { formatPrice } from '@/helpers/format-price'
 import type { Transaction } from '@/types/transaction'
 import { DeleteTransactionButton } from './delete-transaction-button'
@@ -14,8 +13,6 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
 		<>
 			{transactions.map((transaction) => {
 				const amount = formatPrice(transaction.amountInCents / 100)
-				const { name: categoryName, icon: CategoryIcon } =
-					categories[transaction.category]
 
 				return (
 					<div key={transaction.id} className="border-b border-gray-200 py-3">
@@ -25,17 +22,12 @@ export function TransactionsList({ transactions }: TransactionsListProps) {
 									{transaction.description}
 								</h3>
 
-								<div className="flex flex-wrap items-center gap-2">
-									<div className="flex items-center gap-2">
-										<CategoryIcon className="size-4 text-gray-500" />
-										<span className="text-sm text-gray-600">
-											{categoryName}
-										</span>
-									</div>
-
-									<div className="text-sm text-gray-500">
+								<div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+									<span>{transaction.category?.name ?? 'Sem categoria'}</span>
+									<div>-</div>
+									<span>
 										{dayjs(transaction.paymentDate).format('DD/MM/YYYY')}
-									</div>
+									</span>
 								</div>
 
 								<div className="flex items-center gap-2 sm:hidden">

@@ -24,7 +24,7 @@ type ExpensesByCategoryCardProps = {
 }
 
 type ExpensesByCategory = {
-	categoryId: CategoryId
+	categoryId: string
 	categoryName: string
 	totalInCents: number
 	count: number
@@ -40,15 +40,22 @@ export function ExpensesByCategoryCard({
 	transactions,
 }: ExpensesByCategoryCardProps) {
 	const expensesByCategory = transactions
-		.filter((transaction) => transaction.type === 'expense')
+		.filter((transaction) => {
+			return transaction.type === 'expense' && transaction.category !== null
+		})
 		.reduce(
 			(acc, transaction) => {
-				const categoryId = transaction.category
+				const categoryId = transaction.category!.id
+				const categoryName = transaction.category!.name
+
+				if (!categoryId) {
+					return acc
+				}
 
 				if (!acc[categoryId]) {
 					acc[categoryId] = {
 						categoryId,
-						categoryName: categories[categoryId].name,
+						categoryName,
 						totalInCents: 0,
 						count: 0,
 					}
@@ -59,7 +66,7 @@ export function ExpensesByCategoryCard({
 
 				return acc
 			},
-			{} as Record<CategoryId, ExpensesByCategory>,
+			{} as Record<string, ExpensesByCategory>,
 		)
 
 	const chartData = Object.values(expensesByCategory).map((item) => ({
@@ -108,7 +115,7 @@ export function ExpensesByCategoryCard({
 								dataKey="amount"
 								fill="var(--chart-1)"
 								radius={4}
-								barSize={50}
+								barSize={60}
 							/>
 						</BarChart>
 					</ChartContainer>

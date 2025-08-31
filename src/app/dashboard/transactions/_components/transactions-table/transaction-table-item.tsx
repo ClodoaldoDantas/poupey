@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
+import { Badge } from '@/components/ui/badge'
 import { TableCell, TableRow } from '@/components/ui/table'
-import { categories } from '@/constants/categories'
 import { formatPrice } from '@/helpers/format-price'
 import type { Transaction } from '@/types/transaction'
 import { DeleteTransactionButton } from '../delete-transaction-button'
@@ -14,8 +14,6 @@ export function TransactionTableItem({
 	transaction,
 }: TransactionTableItemProps) {
 	const amount = formatPrice(transaction.amountInCents / 100)
-	const { name: categoryName, icon: CategoryIcon } =
-		categories[transaction.category]
 
 	return (
 		<TableRow key={transaction.id}>
@@ -26,10 +24,9 @@ export function TransactionTableItem({
 				<TableCell className="text-green-600">{amount}</TableCell>
 			)}
 			<TableCell>
-				<div className="flex items-center gap-2.5">
-					<CategoryIcon className="size-5" />
-					<span>{categoryName}</span>
-				</div>
+				<Badge variant="outline">
+					{transaction.category?.name ?? 'Sem categoria'}
+				</Badge>
 			</TableCell>
 			<TableCell>
 				{dayjs(transaction.paymentDate).format('DD/MM/YYYY')}

@@ -26,7 +26,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
-import { categories } from '@/constants/categories'
+import { useCategories } from '@/hooks/use-categories'
 
 const formSchema = z.object({
 	description: z.string().min(2, { message: 'Descrição é obrigatória.' }),
@@ -34,7 +34,7 @@ const formSchema = z.object({
 		.number({ error: 'Valor é inválido' })
 		.min(1, { message: 'Valor é obrigatório.' }),
 	type: z.enum(['income', 'expense']),
-	category: z.string().min(1, { message: 'Categoria é obrigatória.' }),
+	categoryId: z.string().min(1, { message: 'Categoria é obrigatória.' }),
 	paymentDate: z.string().min(1, { message: 'Data é obrigatória.' }),
 })
 
@@ -43,12 +43,14 @@ type FormData = z.infer<typeof formSchema>
 const initialState: FormData = {
 	description: '',
 	amount: 0,
-	category: '',
+	categoryId: '',
 	type: 'expense',
 	paymentDate: dayjs().format('YYYY-MM-DD'),
 }
 
 export function AddTransactionForm() {
+	const { data: categories, isLoading: isLoadingCategories } = useCategories()
+
 	const form = useForm<FormData>({
 		resolver: zodResolver(formSchema),
 		defaultValues: initialState,
@@ -67,7 +69,7 @@ export function AddTransactionForm() {
 	function handleCreateTransaction(values: FormData) {
 		createTransactionAction.execute({
 			description: values.description,
-			category: values.category,
+			categoryId: values.categoryId,
 			type: values.type,
 			amountInCents: values.amount * 100,
 			paymentDate: dayjs(values.paymentDate).toISOString(),
@@ -152,25 +154,26 @@ export function AddTransactionForm() {
 
 				<FormField
 					control={form.control}
-					name="category"
+					name="categoryId"
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel>Categoria</FormLabel>
-							<Select onValueChange={field.onChange} value={field.value}>
+							<Select
+								onValueChange={field.onChange}
+								value={field.value}
+								disabled={isLoadingCategories}
+							>
 								<FormControl className="w-full">
 									<SelectTrigger>
 										<SelectValue placeholder="Selecione uma categoria" />
 									</SelectTrigger>
 								</FormControl>
 								<SelectContent>
-									{Object.entries(categories).map(
-										([categoryId, { icon: Icon, name }]) => (
-											<SelectItem key={categoryId} value={categoryId}>
-												{Icon && <Icon className="size-5 text-foreground" />}
-												{name}
-											</SelectItem>
-										),
-									)}
+									{categories?.map((category) => (
+										<SelectItem key={category.id} value={category.id}>
+											{category.name}
+										</SelectItem>
+									))}
 								</SelectContent>
 							</Select>
 							<FormMessage />

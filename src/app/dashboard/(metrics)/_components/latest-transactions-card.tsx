@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { EyeIcon } from 'lucide-react'
+import { DollarSignIcon, EyeIcon } from 'lucide-react'
 import { EmptyData } from '@/components/empty-data'
 import { PreserveQueryLink } from '@/components/preserve-query-link'
 import { Button } from '@/components/ui/button'
@@ -11,7 +11,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card'
-import { categories } from '@/constants/categories'
 import { formatPrice } from '@/helpers/format-price'
 import { cn } from '@/lib/utils'
 import type { Transaction } from '@/types/transaction'
@@ -46,8 +45,6 @@ export function LatestTransactionsCard({
 				{latestTransactions.length > 0 ? (
 					<div className="space-y-4">
 						{latestTransactions.map((transaction) => {
-							const category = categories[transaction.category]
-							const Icon = category?.icon
 							const isIncome = transaction.type === 'income'
 
 							return (
@@ -56,17 +53,15 @@ export function LatestTransactionsCard({
 									className="flex items-center justify-between p-3 border rounded-lg"
 								>
 									<div className="flex items-center gap-3">
-										{Icon && (
-											<div className="flex items-center justify-center w-10 h-10 rounded-full bg-muted">
-												<Icon className="size-5 text-muted-foreground" />
-											</div>
-										)}
+										<div className="flex items-center justify-center w-10 h-10 rounded-full bg-muted">
+											<DollarSignIcon className="size-5 text-muted-foreground" />
+										</div>
 										<div className="flex flex-col">
 											<span className="font-medium text-sm">
 												{transaction.description}
 											</span>
 											<div className="flex items-center gap-2 text-xs text-muted-foreground">
-												<span>{category?.name}</span>
+												<span>{transaction.category?.name}</span>
 												<span>•</span>
 												<span>
 													{dayjs(transaction.paymentDate).format('DD/MM/YYYY')}

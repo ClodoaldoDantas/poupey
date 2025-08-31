@@ -13,7 +13,7 @@ const createTransactionSchema = z.object({
 		.number({ error: 'Valor é inválido' })
 		.min(1, { message: 'Valor é obrigatório.' }),
 	type: z.enum(['income', 'expense']),
-	category: z.string().min(1, { message: 'Categoria é obrigatória.' }),
+	categoryId: z.string().min(1, { message: 'Categoria é obrigatória.' }),
 	paymentDate: z.string().min(1, { message: 'Data é obrigatória.' }),
 })
 
@@ -31,7 +31,7 @@ export const createTransaction = actionClient
 			description: parsedInput.description,
 			amountInCents: parsedInput.amountInCents,
 			type: parsedInput.type,
-			category: parsedInput.category,
+			categoryId: parsedInput.categoryId,
 			paymentDate: parsedInput.paymentDate,
 		})
 
