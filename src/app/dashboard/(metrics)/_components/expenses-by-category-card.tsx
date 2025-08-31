@@ -1,6 +1,6 @@
 'use client'
 
-import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
+import { TrendingDownIcon } from 'lucide-react'
 import { EmptyData } from '@/components/empty-data'
 import {
 	Card,
@@ -9,12 +9,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card'
-import {
-	type ChartConfig,
-	ChartContainer,
-	ChartTooltip,
-	ChartTooltipContent,
-} from '@/components/ui/chart'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { formatPrice } from '@/helpers/format-price'
 import type { Transaction } from '@/types/transaction'
 
@@ -28,12 +23,6 @@ type ExpensesByCategory = {
 	totalInCents: number
 	count: number
 }
-
-const chartConfig = {
-	amount: {
-		label: 'Valor',
-	},
-} satisfies ChartConfig
 
 export function ExpensesByCategoryCard({
 	transactions,
@@ -68,60 +57,56 @@ export function ExpensesByCategoryCard({
 			{} as Record<string, ExpensesByCategory>,
 		)
 
-	const chartData = Object.values(expensesByCategory).map((item) => ({
-		category: item.categoryName,
-		amount: item.totalInCents / 100,
-	}))
-
 	return (
-		<Card>
-			<CardHeader>
+		<Card className="flex flex-col">
+			<CardHeader className="items-center pb-0">
 				<CardTitle>Despesas por categoria</CardTitle>
 				<CardDescription>
 					Veja as despesas agrupadas por categoria
 				</CardDescription>
 			</CardHeader>
-			<CardContent>
-				{transactions.length > 0 ? (
-					<ChartContainer config={chartConfig} className="h-[300px] w-full">
-						<BarChart accessibilityLayer data={chartData}>
-							<CartesianGrid vertical={false} />
-							<XAxis
-								dataKey="category"
-								tickLine={false}
-								tickMargin={10}
-								axisLine={false}
-								fontSize={12}
-								fontWeight={500}
-							/>
-							<ChartTooltip
-								cursor={false}
-								content={
-									<ChartTooltipContent
-										hideLabel
-										formatter={(value) => (
-											<>
-												Total:{' '}
-												<strong className="font-semibold">
-													{formatPrice(Number(value))}
-												</strong>
-											</>
-										)}
-									/>
-								}
-							/>
-							<Bar
-								dataKey="amount"
-								fill="var(--chart-1)"
-								radius={4}
-								barSize={60}
-							/>
-						</BarChart>
-					</ChartContainer>
+			<CardContent className="px-2 flex-1">
+				{Object.values(expensesByCategory).length > 0 ? (
+					<ScrollArea className="h-[312px] w-full rounded-md px-4">
+						<div className="space-y-4">
+							{Object.values(expensesByCategory).map((category) => (
+								<ExpenseCategoryCard
+									key={category.categoryId}
+									category={category}
+								/>
+							))}
+						</div>
+					</ScrollArea>
 				) : (
 					<EmptyData />
 				)}
 			</CardContent>
 		</Card>
+	)
+}
+
+export function ExpenseCategoryCard({
+	category,
+}: {
+	category: ExpensesByCategory
+}) {
+	const amount = formatPrice(category.totalInCents / 100)
+
+	return (
+		<div className="flex items-center justify-between p-3 border rounded-lg">
+			<div className="flex items-center gap-3">
+				<div className="flex items-center justify-center w-10 h-10 rounded-full bg-muted">
+					<TrendingDownIcon className="size-5 text-muted-foreground" />
+				</div>
+				<div className="flex flex-col">
+					<span className="font-medium text-sm">{category.categoryName}</span>
+					<div className="flex items-center gap-2 text-xs text-muted-foreground">
+						<span>Quantidade: {category.count}</span>
+					</div>
+				</div>
+			</div>
+
+			<span className="font-medium hidden sm:block text-red-600">{amount}</span>
+		</div>
 	)
 }
