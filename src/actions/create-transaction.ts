@@ -35,5 +35,5 @@ export const createTransaction = actionClient
 			paymentDate: parsedInput.paymentDate,
 		})
 
-		revalidatePath('/')
+		revalidatePath('/dashboard/transactions')
 	})

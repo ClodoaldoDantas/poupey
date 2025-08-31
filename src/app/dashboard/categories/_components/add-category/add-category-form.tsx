@@ -1,0 +1,80 @@
+'use client'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+import { LoaderIcon } from 'lucide-react'
+import { useAction } from 'next-safe-action/hooks'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { z } from 'zod'
+import { createCategory } from '@/actions/create-category'
+import { Button } from '@/components/ui/button'
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+
+const formSchema = z.object({
+	name: z.string().min(1, { message: 'Nome é obrigatório.' }),
+})
+
+type FormData = z.infer<typeof formSchema>
+
+export function AddCategoryForm() {
+	const form = useForm<FormData>({
+		resolver: zodResolver(formSchema),
+		defaultValues: {
+			name: '',
+		},
+	})
+
+	const createCategoryAction = useAction(createCategory, {
+		onSuccess: () => {
+			toast.success('Categoria criada com sucesso.')
+			form.reset({ name: '' })
+		},
+		onError: () => {
+			toast.error('Erro ao criar categoria.')
+		},
+	})
+
+	function handleCreateCategory(values: FormData) {
+		createCategoryAction.execute({
+			name: values.name,
+		})
+	}
+
+	return (
+		<Form {...form}>
+			<form
+				onSubmit={form.handleSubmit(handleCreateCategory)}
+				className="space-y-6"
+			>
+				<FormField
+					control={form.control}
+					name="name"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Nome</FormLabel>
+							<FormControl>
+								<Input {...field} />
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+
+				<Button type="submit" disabled={createCategoryAction.isPending}>
+					{createCategoryAction.isPending && (
+						<LoaderIcon className="size-5 animate-spin" />
+					)}
+					{createCategoryAction.isPending ? 'Salvando' : 'Salvar'}
+				</Button>
+			</form>
+		</Form>
+	)
+}

@@ -52,5 +52,5 @@ export const updateTransaction = actionClient
 			})
 			.where(eq(transactionsTable.id, parsedInput.id))
 
-		revalidatePath('/')
+		revalidatePath('/dashboard/transactions')
 	})

@@ -6,7 +6,8 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card'
-import { CategoriesTable } from './categories-table'
+import { AddCategory } from './_components/add-category'
+import { CategoriesTable } from './_components/categories-table'
 
 export default async function DashboardCategoriesPage() {
 	const categories = await getCategories()
@@ -17,7 +18,9 @@ export default async function DashboardCategoriesPage() {
 				<CardTitle>Categorias</CardTitle>
 
 				<CardAction className="space-x-2">
-					{/* Botão de adicionar */}
+					<AddCategory.Dialog>
+						<AddCategory.Form />
+					</AddCategory.Dialog>
 				</CardAction>
 			</CardHeader>
 			<CardContent>

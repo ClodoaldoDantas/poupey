@@ -30,5 +30,5 @@ export async function deleteTransaction(transactionId: string) {
 		.delete(transactionsTable)
 		.where(eq(transactionsTable.id, transactionId))
 
-	revalidatePath('/')
+	revalidatePath('/dashboard/transactions')
 }
