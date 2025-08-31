@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
 import { LoaderIcon, TrendingDownIcon, TrendingUpIcon } from 'lucide-react'
 import { useAction } from 'next-safe-action/hooks'
-import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
 import { toast } from 'sonner'
@@ -28,7 +27,7 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 import { useCategories } from '@/hooks/use-categories'
-import { EditTransactionContext } from './edit-transaction-root'
+import type { Transaction } from '@/types/transaction'
 
 const formSchema = z.object({
 	description: z.string().min(2, { message: 'Descrição é obrigatória.' }),
@@ -42,11 +41,11 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>
 
-export function EditTransactionForm() {
-	const { transaction, handleOpenChangeDialog } = useContext(
-		EditTransactionContext,
-	)
-
+export function EditTransactionForm({
+	transaction,
+}: {
+	transaction: Transaction
+}) {
 	const { data: categories, isLoading: isLoadingCategories } = useCategories()
 
 	const form = useForm<FormData>({
@@ -63,7 +62,6 @@ export function EditTransactionForm() {
 	const updateTransactionAction = useAction(updateTransaction, {
 		onSuccess: () => {
 			toast.success('Transação atualizada com sucesso.')
-			handleOpenChangeDialog(false)
 		},
 		onError: () => {
 			toast.error('Erro ao atualizar transação.')

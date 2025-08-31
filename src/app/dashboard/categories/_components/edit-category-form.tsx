@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoaderIcon } from 'lucide-react'
 import { useAction } from 'next-safe-action/hooks'
-import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -18,7 +17,7 @@ import {
 	FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { EditCategoryContext } from './edit-category-root'
+import type { Category } from '@/types/category'
 
 const formSchema = z.object({
 	name: z.string().min(1, { message: 'Nome é obrigatório.' }),
@@ -26,9 +25,7 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>
 
-export function EditCategoryForm() {
-	const { category, handleOpenChangeDialog } = useContext(EditCategoryContext)
-
+export function EditCategoryForm({ category }: { category: Category }) {
 	const form = useForm<FormData>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -39,7 +36,6 @@ export function EditCategoryForm() {
 	const updateCategoryAction = useAction(updateCategory, {
 		onSuccess: () => {
 			toast.success('Categoria atualizada com sucesso.')
-			handleOpenChangeDialog(false)
 		},
 		onError: () => {
 			toast.error('Erro ao atualizar categoria.')

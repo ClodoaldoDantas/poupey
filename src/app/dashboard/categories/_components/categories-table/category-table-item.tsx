@@ -1,7 +1,8 @@
+import { FormDialog } from '@/components/form-dialog'
 import { TableCell, TableRow } from '@/components/ui/table'
 import type { Category } from '@/types/category'
 import { DeleteCategoryButton } from '../delete-category-button'
-import { EditCategory } from '../edit-category'
+import { EditCategoryForm } from '../edit-category-form'
 
 type CategoriesTableItemProps = {
 	category: Category
@@ -12,11 +13,13 @@ export function CategoryTableItem({ category }: CategoriesTableItemProps) {
 		<TableRow>
 			<TableCell>{category.name}</TableCell>
 			<TableCell className="flex items-center gap-2">
-				<EditCategory.Root category={category}>
-					<EditCategory.Dialog>
-						<EditCategory.Form />
-					</EditCategory.Dialog>
-				</EditCategory.Root>
+				<FormDialog
+					title="Editar Categoria"
+					description="Altere os dados da categoria"
+					operation="edit"
+				>
+					<EditCategoryForm category={category} />
+				</FormDialog>
 
 				<DeleteCategoryButton categoryId={category.id} />
 			</TableCell>

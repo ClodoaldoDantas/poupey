@@ -1,8 +1,9 @@
 import dayjs from 'dayjs'
+import { FormDialog } from '@/components/form-dialog'
 import { formatPrice } from '@/helpers/format-price'
 import type { Transaction } from '@/types/transaction'
 import { DeleteTransactionButton } from '../delete-transaction-button'
-import { EditTransaction } from '../edit-transaction'
+import { EditTransactionForm } from '../edit-transaction-form'
 
 export function TransactionsListItem({
 	transaction,
@@ -37,11 +38,13 @@ export function TransactionsListItem({
 					</div>
 
 					<div className="flex items-center gap-1.5">
-						<EditTransaction.Root transaction={transaction}>
-							<EditTransaction.Dialog>
-								<EditTransaction.Form />
-							</EditTransaction.Dialog>
-						</EditTransaction.Root>
+						<FormDialog
+							title="Editar Transação"
+							description="Altere os dados da transação"
+							operation="edit"
+						>
+							<EditTransactionForm transaction={transaction} />
+						</FormDialog>
 
 						<DeleteTransactionButton transactionId={transaction.id} />
 					</div>

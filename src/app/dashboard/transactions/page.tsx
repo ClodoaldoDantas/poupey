@@ -1,6 +1,7 @@
 import type { SearchParams } from 'nuqs/server'
 import { getTransactions } from '@/actions/get-transactions'
 import { EmptyData } from '@/components/empty-data'
+import { FormDialog } from '@/components/form-dialog'
 import {
 	Card,
 	CardAction,
@@ -9,7 +10,7 @@ import {
 	CardTitle,
 } from '@/components/ui/card'
 import { loadSearchParams } from '@/helpers/load-search-params'
-import { AddTransaction } from './_components/add-transaction'
+import { AddTransactionForm } from './_components/add-transaction-form'
 import { ExportExcelButton } from './_components/export-excel-button'
 import { TransactionsList } from './_components/transactions-list'
 import { TransactionsTable } from './_components/transactions-table'
@@ -30,9 +31,13 @@ export default async function DashboardTransactionsPage({
 				<CardTitle>Transações</CardTitle>
 
 				<CardAction className="space-x-2">
-					<AddTransaction.Dialog>
-						<AddTransaction.Form />
-					</AddTransaction.Dialog>
+					<FormDialog
+						title="Adicionar Transação"
+						description="Preencha os dados da transação"
+						operation="add"
+					>
+						<AddTransactionForm />
+					</FormDialog>
 
 					<ExportExcelButton
 						transactions={transactions}
