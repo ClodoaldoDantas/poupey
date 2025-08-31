@@ -4,6 +4,7 @@ import { and, asc, eq } from 'drizzle-orm'
 import { db } from '@/db'
 import { categoriesTable } from '@/db/schema'
 import { getSession } from '@/lib/auth'
+import type { Category } from '@/types/category'
 
 export async function getCategories() {
 	const session = await getSession()
@@ -21,5 +22,5 @@ export async function getCategories() {
 		orderBy: [asc(categoriesTable.name)],
 	})
 
-	return categories
+	return categories as Category[]
 }

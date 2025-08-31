@@ -1,7 +1,6 @@
 'use client'
 
 import dayjs from 'dayjs'
-import { DownloadIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { months } from '@/constants/months'
 import { downloadExcelFile, generateExcelFile } from '@/helpers/excel'
@@ -41,7 +40,6 @@ export function ExportExcelButton({
 			variant="secondary"
 			disabled={transactions.length === 0}
 		>
-			<DownloadIcon className="size-5" />
 			Exportar
 		</Button>
 	)

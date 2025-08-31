@@ -1,4 +1,3 @@
-import { BanknoteArrowUpIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { Button } from '@/components/ui/button'
 import {
@@ -14,10 +13,7 @@ export function AddTransactionDialog({ children }: { children: ReactNode }) {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button>
-					<BanknoteArrowUpIcon className="size-5" />
-					Adicionar
-				</Button>
+				<Button>Adicionar</Button>
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>

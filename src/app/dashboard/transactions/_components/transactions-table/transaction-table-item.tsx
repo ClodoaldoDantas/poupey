@@ -1,5 +1,4 @@
 import dayjs from 'dayjs'
-import { Badge } from '@/components/ui/badge'
 import { TableCell, TableRow } from '@/components/ui/table'
 import { formatPrice } from '@/helpers/format-price'
 import type { Transaction } from '@/types/transaction'
@@ -23,11 +22,7 @@ export function TransactionTableItem({
 			) : (
 				<TableCell className="text-green-600">{amount}</TableCell>
 			)}
-			<TableCell>
-				<Badge variant="outline">
-					{transaction.category?.name ?? 'Sem categoria'}
-				</Badge>
-			</TableCell>
+			<TableCell>{transaction.category?.name ?? 'Sem categoria'}</TableCell>
 			<TableCell>
 				{dayjs(transaction.paymentDate).format('DD/MM/YYYY')}
 			</TableCell>
