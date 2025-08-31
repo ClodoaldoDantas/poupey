@@ -1,5 +1,6 @@
 import { TableCell, TableRow } from '@/components/ui/table'
 import type { Category } from '@/types/category'
+import { DeleteCategoryButton } from '../delete-category-button'
 import { EditCategory } from '../edit-category'
 
 type CategoriesTableItemProps = {
@@ -16,6 +17,8 @@ export function CategoryTableItem({ category }: CategoriesTableItemProps) {
 						<EditCategory.Form />
 					</EditCategory.Dialog>
 				</EditCategory.Root>
+
+				<DeleteCategoryButton categoryId={category.id} />
 			</TableCell>
 		</TableRow>
 	)
