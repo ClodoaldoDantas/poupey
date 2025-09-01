@@ -1,7 +1,6 @@
 'use server'
 
-import dayjs from 'dayjs'
-import { and, desc, eq, gte, lt } from 'drizzle-orm'
+import { and, desc, eq, sql } from 'drizzle-orm'
 import { db } from '@/db'
 import { categoriesTable, transactionsTable } from '@/db/schema'
 import { getSession } from '@/lib/auth'
@@ -18,14 +17,6 @@ export async function getTransactions({ month, year }: GetTransactionsParams) {
 	if (!session?.userId) {
 		throw new Error('Usuário não autenticado.')
 	}
-
-	const startDate = dayjs()
-		.year(year)
-		.month(month)
-		.startOf('month')
-		.toISOString()
-
-	const endDate = dayjs().year(year).month(month).endOf('month').toISOString()
 
 	const transactions = await db
 		.select({
@@ -47,8 +38,8 @@ export async function getTransactions({ month, year }: GetTransactionsParams) {
 		.where(
 			and(
 				eq(transactionsTable.userId, session.userId),
-				gte(transactionsTable.paymentDate, startDate),
-				lt(transactionsTable.paymentDate, endDate),
+				sql`strftime('%Y', ${transactionsTable.paymentDate}) = ${String(year)}`,
+				sql`strftime('%m', ${transactionsTable.paymentDate}) = ${String(month + 1).padStart(2, '0')}`,
 			),
 		)
 		.orderBy(desc(transactionsTable.paymentDate))
