@@ -5,7 +5,6 @@ import { LoaderIcon } from 'lucide-react'
 import { useAction } from 'next-safe-action/hooks'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import { z } from 'zod'
 import { createCategory } from '@/actions/create-category'
 import { Button } from '@/components/ui/button'
 import {
@@ -17,16 +16,14 @@ import {
 	FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-
-const formSchema = z.object({
-	name: z.string().min(1, { message: 'Nome é obrigatório.' }),
-})
-
-type FormData = z.infer<typeof formSchema>
+import {
+	type CategoryFormData,
+	categoryFormSchema,
+} from '../../_schemas/category-form-schema'
 
 export function AddCategoryForm() {
-	const form = useForm<FormData>({
-		resolver: zodResolver(formSchema),
+	const form = useForm<CategoryFormData>({
+		resolver: zodResolver(categoryFormSchema),
 		defaultValues: {
 			name: '',
 		},
@@ -42,7 +39,7 @@ export function AddCategoryForm() {
 		},
 	})
 
-	function handleCreateCategory(values: FormData) {
+	function handleCreateCategory(values: CategoryFormData) {
 		createCategoryAction.execute({
 			name: values.name,
 		})

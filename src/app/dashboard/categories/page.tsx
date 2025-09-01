@@ -15,7 +15,7 @@ export default async function DashboardCategoriesPage() {
 
 	return (
 		<Card>
-			<CardHeader>
+			<CardHeader className="flex flex-wrap gap-4 items-center justify-between">
 				<CardTitle>Categorias</CardTitle>
 
 				<CardAction className="space-x-2">

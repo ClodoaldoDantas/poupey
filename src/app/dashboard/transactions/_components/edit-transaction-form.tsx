@@ -7,7 +7,6 @@ import { useAction } from 'next-safe-action/hooks'
 import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
 import { toast } from 'sonner'
-import { z } from 'zod'
 import { updateTransaction } from '@/actions/update-transaction'
 import { Button } from '@/components/ui/button'
 import {
@@ -28,18 +27,10 @@ import {
 } from '@/components/ui/select'
 import { useCategories } from '@/hooks/use-categories'
 import type { Transaction } from '@/types/transaction'
-
-const formSchema = z.object({
-	description: z.string().min(2, { message: 'Descrição é obrigatória.' }),
-	amount: z
-		.number({ error: 'Valor é inválido' })
-		.min(1, { message: 'Valor é obrigatório.' }),
-	type: z.enum(['income', 'expense']),
-	categoryId: z.string().min(1, { message: 'Categoria é obrigatória.' }),
-	paymentDate: z.string().min(1, { message: 'Data é obrigatória.' }),
-})
-
-type FormData = z.infer<typeof formSchema>
+import {
+	type TransactionFormData,
+	transactionFormSchema,
+} from '../../_schemas/transaction-form-schema'
 
 type EditTransactionFormProps = {
 	transaction: Transaction
@@ -52,8 +43,8 @@ export function EditTransactionForm({
 }: EditTransactionFormProps) {
 	const { data: categories, isLoading: isLoadingCategories } = useCategories()
 
-	const form = useForm<FormData>({
-		resolver: zodResolver(formSchema),
+	const form = useForm<TransactionFormData>({
+		resolver: zodResolver(transactionFormSchema),
 		defaultValues: {
 			description: transaction.description,
 			amount: transaction.amountInCents / 100,
@@ -73,7 +64,7 @@ export function EditTransactionForm({
 		},
 	})
 
-	function handleUpdateTransaction(values: FormData) {
+	function handleUpdateTransaction(values: TransactionFormData) {
 		updateTransactionAction.execute({
 			id: transaction.id,
 			description: values.description,

@@ -7,7 +7,6 @@ import { useAction } from 'next-safe-action/hooks'
 import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
 import { toast } from 'sonner'
-import { z } from 'zod'
 import { createTransaction } from '@/actions/create-transaction'
 import { Button } from '@/components/ui/button'
 import {
@@ -27,20 +26,12 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 import { useCategories } from '@/hooks/use-categories'
+import {
+	type TransactionFormData,
+	transactionFormSchema,
+} from '../../_schemas/transaction-form-schema'
 
-const formSchema = z.object({
-	description: z.string().min(2, { message: 'Descrição é obrigatória.' }),
-	amount: z
-		.number({ error: 'Valor é inválido' })
-		.min(1, { message: 'Valor é obrigatório.' }),
-	type: z.enum(['income', 'expense']),
-	categoryId: z.string().min(1, { message: 'Categoria é obrigatória.' }),
-	paymentDate: z.string().min(1, { message: 'Data é obrigatória.' }),
-})
-
-type FormData = z.infer<typeof formSchema>
-
-const initialState: FormData = {
+const initialState: TransactionFormData = {
 	description: '',
 	amount: 0,
 	categoryId: '',
@@ -51,8 +42,8 @@ const initialState: FormData = {
 export function AddTransactionForm() {
 	const { data: categories, isLoading: isLoadingCategories } = useCategories()
 
-	const form = useForm<FormData>({
-		resolver: zodResolver(formSchema),
+	const form = useForm<TransactionFormData>({
+		resolver: zodResolver(transactionFormSchema),
 		defaultValues: initialState,
 	})
 
@@ -66,7 +57,7 @@ export function AddTransactionForm() {
 		},
 	})
 
-	function handleCreateTransaction(values: FormData) {
+	function handleCreateTransaction(values: TransactionFormData) {
 		createTransactionAction.execute({
 			description: values.description,
 			categoryId: values.categoryId,
