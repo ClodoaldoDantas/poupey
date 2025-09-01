@@ -4,12 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import dayjs from 'dayjs'
 import { LoaderIcon, TrendingDownIcon, TrendingUpIcon } from 'lucide-react'
 import { useAction } from 'next-safe-action/hooks'
-import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
 import { toast } from 'sonner'
-import { z } from 'zod'
-import { updateTransaction } from '@/actions/update-transaction'
+import { createTransaction } from '@/actions/create-transaction'
 import { Button } from '@/components/ui/button'
 import {
 	Form,
@@ -27,52 +25,42 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select'
-import { categories } from '@/constants/categories'
-import { EditTransactionContext } from './edit-transaction-root'
+import { useCategories } from '@/hooks/use-categories'
+import {
+	type TransactionFormData,
+	transactionFormSchema,
+} from '../../_schemas/transaction-form-schema'
 
-const formSchema = z.object({
-	description: z.string().min(2, { message: 'Descrição é obrigatória.' }),
-	amount: z
-		.number({ error: 'Valor é inválido' })
-		.min(1, { message: 'Valor é obrigatório.' }),
-	type: z.enum(['income', 'expense']),
-	category: z.string().min(1, { message: 'Categoria é obrigatória.' }),
-	paymentDate: z.string().min(1, { message: 'Data é obrigatória.' }),
-})
+const initialState: TransactionFormData = {
+	description: '',
+	amount: 0,
+	categoryId: '',
+	type: 'expense',
+	paymentDate: dayjs().format('YYYY-MM-DD'),
+}
 
-type FormData = z.infer<typeof formSchema>
+export function AddTransactionForm() {
+	const { data: categories, isLoading: isLoadingCategories } = useCategories()
 
-export function EditTransactionForm() {
-	const { transaction, handleOpenChangeDialog } = useContext(
-		EditTransactionContext,
-	)
-
-	const form = useForm<FormData>({
-		resolver: zodResolver(formSchema),
-		defaultValues: {
-			description: transaction.description,
-			amount: transaction.amountInCents / 100,
-			type: transaction.type,
-			category: transaction.category,
-			paymentDate: dayjs(transaction.paymentDate).format('YYYY-MM-DD'),
-		},
+	const form = useForm<TransactionFormData>({
+		resolver: zodResolver(transactionFormSchema),
+		defaultValues: initialState,
 	})
 
-	const updateTransactionAction = useAction(updateTransaction, {
+	const createTransactionAction = useAction(createTransaction, {
 		onSuccess: () => {
-			toast.success('Transação atualizada com sucesso.')
-			handleOpenChangeDialog(false)
+			toast.success('Transação criada com sucesso.')
+			form.reset(initialState)
 		},
 		onError: () => {
-			toast.error('Erro ao atualizar transação.')
+			toast.error('Erro ao criar transação.')
 		},
 	})
 
-	function handleUpdateTransaction(values: FormData) {
-		updateTransactionAction.execute({
-			id: transaction.id,
+	function handleCreateTransaction(values: TransactionFormData) {
+		createTransactionAction.execute({
 			description: values.description,
-			category: values.category,
+			categoryId: values.categoryId,
 			type: values.type,
 			amountInCents: values.amount * 100,
 			paymentDate: dayjs(values.paymentDate).toISOString(),
@@ -82,7 +70,7 @@ export function EditTransactionForm() {
 	return (
 		<Form {...form}>
 			<form
-				onSubmit={form.handleSubmit(handleUpdateTransaction)}
+				onSubmit={form.handleSubmit(handleCreateTransaction)}
 				className="space-y-6"
 			>
 				<FormField
@@ -157,25 +145,26 @@ export function EditTransactionForm() {
 
 				<FormField
 					control={form.control}
-					name="category"
+					name="categoryId"
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel>Categoria</FormLabel>
-							<Select onValueChange={field.onChange} value={field.value}>
+							<Select
+								onValueChange={field.onChange}
+								value={field.value}
+								disabled={isLoadingCategories}
+							>
 								<FormControl className="w-full">
 									<SelectTrigger>
 										<SelectValue placeholder="Selecione uma categoria" />
 									</SelectTrigger>
 								</FormControl>
 								<SelectContent>
-									{Object.entries(categories).map(
-										([categoryId, { icon: Icon, name }]) => (
-											<SelectItem key={categoryId} value={categoryId}>
-												{Icon && <Icon className="size-5 text-foreground" />}
-												{name}
-											</SelectItem>
-										),
-									)}
+									{categories?.map((category) => (
+										<SelectItem key={category.id} value={category.id}>
+											{category.name}
+										</SelectItem>
+									))}
 								</SelectContent>
 							</Select>
 							<FormMessage />
@@ -197,11 +186,11 @@ export function EditTransactionForm() {
 					)}
 				/>
 
-				<Button type="submit" disabled={updateTransactionAction.isPending}>
-					{updateTransactionAction.isPending && (
+				<Button type="submit" disabled={createTransactionAction.isPending}>
+					{createTransactionAction.isPending && (
 						<LoaderIcon className="size-5 animate-spin" />
 					)}
-					{updateTransactionAction.isPending ? 'Atualizando' : 'Atualizar'}
+					{createTransactionAction.isPending ? 'Salvando' : 'Salvar'}
 				</Button>
 			</form>
 		</Form>

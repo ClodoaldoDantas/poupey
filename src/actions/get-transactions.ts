@@ -27,17 +27,29 @@ export async function getTransactions({ month, year }: GetTransactionsParams) {
 
 	const endDate = dayjs().year(year).month(month).endOf('month').toISOString()
 
-	const transactions = await db
-		.select()
-		.from(transactionsTable)
-		.where(
-			and(
-				eq(transactionsTable.userId, session.userId),
-				gte(transactionsTable.paymentDate, startDate),
-				lt(transactionsTable.paymentDate, endDate),
-			),
-		)
-		.orderBy(desc(transactionsTable.paymentDate))
+	const transactions = await db.query.transactionsTable.findMany({
+		columns: {
+			id: true,
+			type: true,
+			amountInCents: true,
+			description: true,
+			paymentDate: true,
+		},
+		where: and(
+			eq(transactionsTable.userId, session.userId),
+			gte(transactionsTable.paymentDate, startDate),
+			lt(transactionsTable.paymentDate, endDate),
+		),
+		with: {
+			category: {
+				columns: {
+					id: true,
+					name: true,
+				},
+			},
+		},
+		orderBy: [desc(transactionsTable.paymentDate)],
+	})
 
 	return transactions as Transaction[]
 }

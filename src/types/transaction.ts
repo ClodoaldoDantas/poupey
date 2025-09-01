@@ -1,10 +1,10 @@
-import type { CategoryId } from '@/constants/categories'
+import type { Category } from './category'
 
 export type Transaction = {
 	id: string
+	type: 'income' | 'expense'
 	description: string
 	amountInCents: number
 	paymentDate: string
-	category: CategoryId
-	type: 'income' | 'expense'
+	category: Category | null
 }

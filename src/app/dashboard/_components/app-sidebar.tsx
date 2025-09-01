@@ -1,4 +1,4 @@
-import { DollarSignIcon, HomeIcon } from 'lucide-react'
+import { DollarSignIcon, FolderIcon, HomeIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import logoImg from '@/assets/logo.svg'
@@ -51,6 +51,15 @@ export function AppSidebar() {
 									</SidebarMenuButton>
 								</SidebarMenuItem>
 							))}
+
+							<SidebarMenuItem>
+								<SidebarMenuButton asChild>
+									<Link href="/dashboard/categories">
+										<FolderIcon />
+										<span>Categorias</span>
+									</Link>
+								</SidebarMenuButton>
+							</SidebarMenuItem>
 						</SidebarMenu>
 					</SidebarGroupContent>
 				</SidebarGroup>

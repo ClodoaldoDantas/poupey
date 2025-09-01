@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { EyeIcon } from 'lucide-react'
+import { BanknoteIcon, EyeIcon } from 'lucide-react'
 import { EmptyData } from '@/components/empty-data'
 import { PreserveQueryLink } from '@/components/preserve-query-link'
 import { Button } from '@/components/ui/button'
@@ -11,7 +11,6 @@ import {
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card'
-import { categories } from '@/constants/categories'
 import { formatPrice } from '@/helpers/format-price'
 import { cn } from '@/lib/utils'
 import type { Transaction } from '@/types/transaction'
@@ -45,53 +44,47 @@ export function LatestTransactionsCard({
 			<CardContent className="flex-1">
 				{latestTransactions.length > 0 ? (
 					<div className="space-y-4">
-						{latestTransactions.map((transaction) => {
-							const category = categories[transaction.category]
-							const Icon = category?.icon
-							const isIncome = transaction.type === 'income'
-
-							return (
-								<div
-									key={transaction.id}
-									className="flex items-center justify-between p-3 border rounded-lg"
-								>
-									<div className="flex items-center gap-3">
-										{Icon && (
-											<div className="flex items-center justify-center w-10 h-10 rounded-full bg-muted">
-												<Icon className="size-5 text-muted-foreground" />
-											</div>
-										)}
-										<div className="flex flex-col">
-											<span className="font-medium text-sm">
-												{transaction.description}
-											</span>
-											<div className="flex items-center gap-2 text-xs text-muted-foreground">
-												<span>{category?.name}</span>
-												<span>•</span>
-												<span>
-													{dayjs(transaction.paymentDate).format('DD/MM/YYYY')}
-												</span>
-											</div>
-										</div>
-									</div>
-
-									<span
-										className={cn(
-											'font-medium hidden sm:block',
-											isIncome ? 'text-green-600' : 'text-red-600',
-										)}
-									>
-										{isIncome ? '+' : '-'}
-										{formatPrice(transaction.amountInCents / 100)}
-									</span>
-								</div>
-							)
-						})}
+						{latestTransactions.map((transaction) => (
+							<TransactionCard key={transaction.id} transaction={transaction} />
+						))}
 					</div>
 				) : (
 					<EmptyData />
 				)}
 			</CardContent>
 		</Card>
+	)
+}
+
+export function TransactionCard({ transaction }: { transaction: Transaction }) {
+	const amount = formatPrice(transaction.amountInCents / 100)
+	const isIncome = transaction.type === 'income'
+
+	return (
+		<div className="flex items-center justify-between p-3 border rounded-lg">
+			<div className="flex items-center gap-3">
+				<div className="flex items-center justify-center w-10 h-10 rounded-full bg-muted">
+					<BanknoteIcon className="size-5 text-muted-foreground" />
+				</div>
+				<div className="flex flex-col">
+					<span className="font-medium text-sm">{transaction.description}</span>
+					<div className="flex items-center gap-2 text-xs text-muted-foreground">
+						<span>{transaction.category?.name}</span>
+						<span>•</span>
+						<span>{dayjs(transaction.paymentDate).format('DD/MM/YYYY')}</span>
+					</div>
+				</div>
+			</div>
+
+			<span
+				className={cn(
+					'font-medium hidden sm:block',
+					isIncome ? 'text-green-600' : 'text-red-600',
+				)}
+			>
+				{isIncome ? '+' : '-'}
+				{amount}
+			</span>
+		</div>
 	)
 }

@@ -3,6 +3,7 @@ import { Sora } from 'next/font/google'
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
+import { QueryProvider } from '@/components/query-provider'
 
 const sora = Sora({
 	variable: '--font-sora',
@@ -28,7 +29,9 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={`${sora.variable} antialiased font-sans`}>
-				<NuqsAdapter>{children}</NuqsAdapter>
+				<QueryProvider>
+					<NuqsAdapter>{children}</NuqsAdapter>
+				</QueryProvider>
 				<Toaster richColors position="bottom-center" />
 			</body>
 		</html>
