@@ -25,8 +25,6 @@ export default async function DashboardTransactionsPage({
 	const { month, year } = await loadSearchParams(searchParams)
 	const transactions = await getTransactions({ month, year })
 
-	console.log(transactions)
-
 	return (
 		<Card>
 			<CardHeader className="flex flex-wrap gap-4 items-center justify-between">

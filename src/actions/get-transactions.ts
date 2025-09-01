@@ -19,13 +19,13 @@ export async function getTransactions({ month, year }: GetTransactionsParams) {
 		throw new Error('Usuário não autenticado.')
 	}
 
-	const startDate = dayjs()
-		.year(year)
-		.month(month)
-		.startOf('month')
-		.toISOString()
+	// const startDate = dayjs()
+	// 	.year(year)
+	// 	.month(month)
+	// 	.startOf('month')
+	// 	.toISOString()
 
-	const endDate = dayjs().year(year).month(month).endOf('month').toISOString()
+	// const endDate = dayjs().year(year).month(month).endOf('month').toISOString()
 
 	const transactions = await db.query.transactionsTable.findMany({
 		columns: {
@@ -37,8 +37,8 @@ export async function getTransactions({ month, year }: GetTransactionsParams) {
 		},
 		where: and(
 			eq(transactionsTable.userId, session.userId),
-			gte(transactionsTable.paymentDate, startDate),
-			lt(transactionsTable.paymentDate, endDate),
+			// gte(transactionsTable.paymentDate, startDate),
+			// lt(transactionsTable.paymentDate, endDate),
 		),
 		with: {
 			category: {
